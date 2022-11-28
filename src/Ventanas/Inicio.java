@@ -597,7 +597,7 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_acercadeNosMousePressed
 
     private void InstagramMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InstagramMousePressed
-        String Url = " https://www.instagram.com/enocnehemias_/ ";
+        String Url = "https://www.instagram.com/enocnehemias_/";
         try {
             try {
                 Desktop.getDesktop().browse(new URI(Url));
