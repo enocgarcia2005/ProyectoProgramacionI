@@ -712,7 +712,7 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 || txtCarnet.getText().isEmpty()
                 || txtAcumulado.getText().isEmpty()
                 || txtIparcial.getText().isEmpty()
-                || txtIIparcial.getText().isEmpty()) {
+                || txtIIparcial.getText().isEmpty()||txtAsignatura.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Rellene todos los Campos");
         } else {
             double NF = Double.parseDouble(txtIparcial.getText()) + Double.parseDouble(txtIIparcial.getText())
@@ -897,11 +897,12 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 double Acumulado = Double.parseDouble(txtAcumulado.getText());
                 for (Datos n : DatosT) {
                     if (!n.getNombres().equals(Nombre)
-                            && !n.getCarnet().equals(Carnet)
-                            && !n.getAsignatura().equals(Asignatura)
-                            && n.getIpacial() != Iparcial
-                            && n.getIIparcial() != IIparcial
-                            && n.getAcumulado() != Acumulado) {
+                            || !n.getCarnet().equals(Carnet)
+                            || !n.getAsignatura().equals(Asignatura)
+                            ||n.getIpacial()!=Iparcial
+                            ||n.getIIparcial()!=IIparcial
+                            ||n.getAcumulado()!=Acumulado
+                        ) {
                         bw.write(n.Nombres + "," + n.Carnet + "," + n.Asignatura + "," + n.Ipacial + "," + n.IIparcial + "," + n.Acumulado + ", " + n.NF + "\r\n");
                     } else {
                         JOptionPane.showMessageDialog(null, "Registro Eliminado");

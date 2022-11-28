@@ -1,3 +1,1 @@
-Enoc Nehemias Garcia Alcantara,2022-0002J,Programacion,35.0,35.0,30.0, 100.0
-Leonela Carolina Huerta Balladares,2022-0043J,Ingles II,34.0,30.0,25.0,89.0
-Nelson Antonio Mendez Meneses,2022-0030J,Matematica II,30.0,25.0,30.0,85.0
+Enoc Nehemias Garcia Alcantara,2022-0002J,Matematica II,35.0,35.0,30.0, 100.0
