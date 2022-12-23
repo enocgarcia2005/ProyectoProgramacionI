@@ -20,20 +20,30 @@ import javax.swing.JOptionPane;
 
 public final class Inicio extends javax.swing.JFrame {
 
-    File Alumnos = new File("Alumnos.txt");
-    File Maestros = new File("Maestros.txt");
+    //Valores constantes
+    /*  Colores     */
+    private final Color GRIS = new Color(153, 153, 153);
+    private final Color NEGRO = new Color(0, 0, 0);
+    private final Color VERDE_CLARO = new Color(51, 180, 0);
+    private final Color VERDE_OSCURO = new Color(51, 153, 0);
+    /*Urls  */
+    private final String FACEBOOK = "https://www.facebook.com/enoc.garcia.395/";
+    private final String INSTAGRAM = "https://www.instagram.com/enocnehemias_/";
+    private final String TIKTOK = "https://www.tiktok.com/@enocnehemias7?is_from_webapp=1&sender_device=pc";
+
+    //Objeto de la clase animacion
     Animaciones animar = new Animaciones();
-    private Scanner sc;
-    private static int Intentos;
-    private static String usuario, conrtraseña;
+//variables estaticas encargadas de la verificacion del login
+    private static int intentos;
+    private static String usuario, contra;
 
     public Inicio() {
         initComponents();
-        Icono();
+        icono();
     }
-
+//reiniciar intentos una vez ingreses a las ventanas
     public void setIntentos(int Intentos) {
-        Inicio.Intentos = Intentos;
+        Inicio.intentos = Intentos;
     }
 
     @SuppressWarnings("unchecked")
@@ -41,48 +51,48 @@ public final class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         agruparbotones = new javax.swing.ButtonGroup();
-        BackGround = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        Header = new javax.swing.JPanel();
-        LogoHeader = new javax.swing.JLabel();
-        NombreLogo = new javax.swing.JLabel();
-        BtnVolverAInicio = new javax.swing.JLabel();
-        BtnIniciarSesion = new javax.swing.JLabel();
-        BtnSalir = new javax.swing.JButton();
+        background = new javax.swing.JPanel();
+        copyright = new javax.swing.JLabel();
+        pnlHeader = new javax.swing.JPanel();
+        logoPeque = new javax.swing.JLabel();
+        nombreApp = new javax.swing.JLabel();
+        btnVolverAInicio = new javax.swing.JLabel();
+        btnIniciarSesion = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
         SepararHeader = new javax.swing.JSeparator();
-        PnlInfo = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        Logo256px = new javax.swing.JLabel();
-        Iniciodesesion = new javax.swing.JPanel();
+        pnlDescripcionPrograma = new javax.swing.JPanel();
+        lblTituloInfo = new javax.swing.JLabel();
+        lblLinea1Info = new javax.swing.JLabel();
+        lblLinea2Info = new javax.swing.JLabel();
+        lblLinea3Info = new javax.swing.JLabel();
+        lblLinea4Info = new javax.swing.JLabel();
+        lblLinea5Info = new javax.swing.JLabel();
+        lblLinea6Info = new javax.swing.JLabel();
+        logoGrande = new javax.swing.JLabel();
+        pnlLogin = new javax.swing.JPanel();
         lblContraseña = new javax.swing.JLabel();
         lblUsuarios = new javax.swing.JLabel();
-        txtAlumnoUsuario = new javax.swing.JTextField();
-        SeparadorContra = new javax.swing.JSeparator();
-        SeparadorUserA = new javax.swing.JSeparator();
+        txtUsuario = new javax.swing.JTextField();
+        separadorContra = new javax.swing.JSeparator();
+        separadorUserA = new javax.swing.JSeparator();
         txtContra = new javax.swing.JPasswordField();
-        BtnIniciarSA = new javax.swing.JButton();
-        lblTitulo = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JButton();
+        lblEncabezadoLogin = new javax.swing.JLabel();
         iconoUser = new javax.swing.JLabel();
         iconoPasword = new javax.swing.JLabel();
-        Alumno = new javax.swing.JRadioButton();
-        Maestro = new javax.swing.JRadioButton();
-        acercadeNos = new javax.swing.JPanel();
-        SeparadorAcercaDeNosotros = new javax.swing.JSeparator();
-        BtnAcercaDeNosotros = new javax.swing.JLabel();
+        alumno = new javax.swing.JRadioButton();
+        maestro = new javax.swing.JRadioButton();
         pnlAcercaDeNosotros = new javax.swing.JPanel();
-        ImagenDesarrollador = new javax.swing.JLabel();
+        separadorAcercaDeNosotros = new javax.swing.JSeparator();
+        btnAcercaDeNosotros = new javax.swing.JLabel();
+        pnlRedesDesarrollador = new javax.swing.JPanel();
+        imagenDesarrollador = new javax.swing.JLabel();
         lblPiedefoto = new javax.swing.JLabel();
         lblNumero = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
-        Facebook = new javax.swing.JLabel();
-        TikTok = new javax.swing.JLabel();
-        Instagram = new javax.swing.JLabel();
+        btnFacebook = new javax.swing.JLabel();
+        btnTikTok = new javax.swing.JLabel();
+        btnInstagram = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -94,199 +104,199 @@ public final class Inicio extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BackGround.setBackground(new java.awt.Color(255, 255, 255));
-        BackGround.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
-        BackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        background.setBackground(new java.awt.Color(255, 255, 255));
+        background.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel13.setText("© 2022 Enoc Garcia. Todos los derechos reservados.");
-        BackGround.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 560, -1, -1));
+        copyright.setBackground(new java.awt.Color(255, 255, 255));
+        copyright.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        copyright.setForeground(new java.awt.Color(51, 153, 0));
+        copyright.setText("© 2022 Enoc Garcia. Todos los derechos reservados.");
+        background.add(copyright, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 560, -1, -1));
 
-        Header.setBackground(new java.awt.Color(255, 255, 255));
-        Header.setForeground(new java.awt.Color(153, 153, 153));
-        Header.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
+        pnlHeader.setForeground(new java.awt.Color(153, 153, 153));
+        pnlHeader.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HeaderMouseClicked(evt);
+                pnlHeaderMouseClicked(evt);
             }
         });
-        Header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        LogoHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
-        Header.add(LogoHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        logoPeque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
+        pnlHeader.add(logoPeque, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        NombreLogo.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
-        NombreLogo.setForeground(new java.awt.Color(0, 153, 0));
-        NombreLogo.setText("Grading System");
-        Header.add(NombreLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 13, -1, -1));
+        nombreApp.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        nombreApp.setForeground(new java.awt.Color(0, 153, 0));
+        nombreApp.setText("Grading System");
+        pnlHeader.add(nombreApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 13, -1, -1));
 
-        BtnVolverAInicio.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        BtnVolverAInicio.setForeground(new java.awt.Color(51, 153, 0));
-        BtnVolverAInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BtnVolverAInicio.setText("Volver a Inicio");
-        BtnVolverAInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnVolverAInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnVolverAInicio.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnVolverAInicio.setForeground(new java.awt.Color(51, 153, 0));
+        btnVolverAInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnVolverAInicio.setText("Volver a Inicio");
+        btnVolverAInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVolverAInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BtnVolverAInicioMouseEntered(evt);
+                btnVolverAInicioMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                BtnVolverAInicioMouseExited(evt);
+                btnVolverAInicioMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                BtnVolverAInicioMousePressed(evt);
+                btnVolverAInicioMousePressed(evt);
             }
         });
-        Header.add(BtnVolverAInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, -50, 160, 30));
+        pnlHeader.add(btnVolverAInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, -50, 160, 30));
 
-        BtnIniciarSesion.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        BtnIniciarSesion.setForeground(new java.awt.Color(51, 153, 0));
-        BtnIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BtnIniciarSesion.setText("Iniciar Sesión");
-        BtnIniciarSesion.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        BtnIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnIniciarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnIniciarSesion.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnIniciarSesion.setForeground(new java.awt.Color(51, 153, 0));
+        btnIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnIniciarSesion.setText("Iniciar Sesión");
+        btnIniciarSesion.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        btnIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIniciarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BtnIniciarSesionMouseEntered(evt);
+                btnIniciarSesionMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                BtnIniciarSesionMouseExited(evt);
+                btnIniciarSesionMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                BtnIniciarSesionMousePressed(evt);
+                btnIniciarSesionMousePressed(evt);
             }
         });
-        Header.add(BtnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(777, 10, 160, 30));
+        pnlHeader.add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(777, 10, 160, 30));
 
-        BtnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exit-2.png"))); // NOI18N
-        BtnSalir.setBorder(null);
-        BtnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnSalir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
-        BtnSalir.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
-        BtnSalir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
-        BtnSalir.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exit-2.png"))); // NOI18N
+        btnSalir.setBorder(null);
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
+        btnSalir.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
+        btnSalir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSalirActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
-        Header.add(BtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1056, 0, 36, 36));
+        pnlHeader.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1056, 0, 36, 36));
 
-        BackGround.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 1090, 50));
-        BackGround.add(SepararHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 53, 1098, 10));
+        background.add(pnlHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 1090, 50));
+        background.add(SepararHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 53, 1098, 10));
 
-        PnlInfo.setBackground(new java.awt.Color(255, 255, 255));
+        pnlDescripcionPrograma.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel2.setText("Sistema de Notas Grading System");
+        lblTituloInfo.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
+        lblTituloInfo.setForeground(new java.awt.Color(51, 153, 0));
+        lblTituloInfo.setText("Sistema de Notas Grading System");
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel3.setText("Es una sofisticada herramienta que integra en un solo paquete la administración ");
+        lblLinea1Info.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblLinea1Info.setForeground(new java.awt.Color(51, 153, 0));
+        lblLinea1Info.setText("Es una sofisticada herramienta que integra en un solo paquete la administración ");
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel4.setText("y consulta de calificaciones estudiantiles.");
+        lblLinea2Info.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblLinea2Info.setForeground(new java.awt.Color(51, 153, 0));
+        lblLinea2Info.setText("y consulta de calificaciones estudiantiles.");
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel5.setText("El sistema esta pensado para funcionar atravez de 2 perfiles:");
+        lblLinea3Info.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblLinea3Info.setForeground(new java.awt.Color(51, 153, 0));
+        lblLinea3Info.setText("El sistema esta pensado para funcionar atravez de 2 perfiles:");
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel6.setText("-Docente");
+        lblLinea4Info.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblLinea4Info.setForeground(new java.awt.Color(51, 153, 0));
+        lblLinea4Info.setText("-Docente");
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel7.setText("-Estudiante");
+        lblLinea5Info.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblLinea5Info.setForeground(new java.awt.Color(51, 153, 0));
+        lblLinea5Info.setText("-Estudiante");
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel8.setText("Cada perfil tiene perfiles y funciones diferentes para su correcto funcionamiento.");
+        lblLinea6Info.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblLinea6Info.setForeground(new java.awt.Color(51, 153, 0));
+        lblLinea6Info.setText("Cada perfil tiene perfiles y funciones diferentes para su correcto funcionamiento.");
 
-        javax.swing.GroupLayout PnlInfoLayout = new javax.swing.GroupLayout(PnlInfo);
-        PnlInfo.setLayout(PnlInfoLayout);
-        PnlInfoLayout.setHorizontalGroup(
-            PnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlInfoLayout.createSequentialGroup()
-                .addGroup(PnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlInfoLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlDescripcionProgramaLayout = new javax.swing.GroupLayout(pnlDescripcionPrograma);
+        pnlDescripcionPrograma.setLayout(pnlDescripcionProgramaLayout);
+        pnlDescripcionProgramaLayout.setHorizontalGroup(
+            pnlDescripcionProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDescripcionProgramaLayout.createSequentialGroup()
+                .addGroup(pnlDescripcionProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDescripcionProgramaLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel8))
-                    .addGroup(PnlInfoLayout.createSequentialGroup()
-                        .addGroup(PnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
+                        .addComponent(lblLinea6Info))
+                    .addGroup(pnlDescripcionProgramaLayout.createSequentialGroup()
+                        .addGroup(pnlDescripcionProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLinea3Info)
+                            .addComponent(lblLinea4Info)
+                            .addComponent(lblLinea5Info)
+                            .addComponent(lblLinea2Info)
+                            .addComponent(lblLinea1Info)
+                            .addComponent(lblTituloInfo))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        PnlInfoLayout.setVerticalGroup(
-            PnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlInfoLayout.createSequentialGroup()
+        pnlDescripcionProgramaLayout.setVerticalGroup(
+            pnlDescripcionProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDescripcionProgramaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addComponent(lblTituloInfo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(lblLinea1Info)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(lblLinea2Info)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addComponent(lblLinea3Info)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(lblLinea4Info)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
+                .addComponent(lblLinea5Info)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(lblLinea6Info)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        BackGround.add(PnlInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 140, 590, -1));
+        background.add(pnlDescripcionPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 140, 590, -1));
 
-        Logo256px.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good-mark-2.png"))); // NOI18N
-        BackGround.add(Logo256px, new org.netbeans.lib.awtextra.AbsoluteConstraints(-270, 110, -1, -1));
+        logoGrande.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good-mark-2.png"))); // NOI18N
+        background.add(logoGrande, new org.netbeans.lib.awtextra.AbsoluteConstraints(-270, 110, -1, -1));
 
-        Iniciodesesion.setBackground(new java.awt.Color(255, 255, 255));
-        Iniciodesesion.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        Iniciodesesion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Iniciodesesion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlLogin.setBackground(new java.awt.Color(255, 255, 255));
+        pnlLogin.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        pnlLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblContraseña.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblContraseña.setForeground(new java.awt.Color(51, 153, 0));
         lblContraseña.setText("Contraseña:");
-        Iniciodesesion.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, -1, -1));
+        pnlLogin.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, -1, -1));
 
         lblUsuarios.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblUsuarios.setForeground(new java.awt.Color(51, 153, 0));
         lblUsuarios.setText("Usuario:");
-        Iniciodesesion.add(lblUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
+        pnlLogin.add(lblUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
 
-        txtAlumnoUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtAlumnoUsuario.setForeground(new java.awt.Color(153, 153, 153));
-        txtAlumnoUsuario.setText("Introduzca su usuario");
-        txtAlumnoUsuario.setBorder(null);
-        txtAlumnoUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuario.setText("Introduzca su usuario");
+        txtUsuario.setBorder(null);
+        txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtAlumnoUsuarioMousePressed(evt);
+                txtUsuarioMousePressed(evt);
             }
         });
-        txtAlumnoUsuario.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAlumnoUsuarioActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
             }
         });
-        Iniciodesesion.add(txtAlumnoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 160, -1));
+        pnlLogin.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 160, -1));
 
-        SeparadorContra.setBackground(new java.awt.Color(51, 153, 0));
-        SeparadorContra.setForeground(new java.awt.Color(51, 153, 0));
-        Iniciodesesion.add(SeparadorContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 160, 10));
+        separadorContra.setBackground(new java.awt.Color(51, 153, 0));
+        separadorContra.setForeground(new java.awt.Color(51, 153, 0));
+        pnlLogin.add(separadorContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 160, 10));
 
-        SeparadorUserA.setBackground(new java.awt.Color(51, 153, 0));
-        SeparadorUserA.setForeground(new java.awt.Color(51, 153, 0));
-        Iniciodesesion.add(SeparadorUserA, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 160, -1));
+        separadorUserA.setBackground(new java.awt.Color(51, 153, 0));
+        separadorUserA.setForeground(new java.awt.Color(51, 153, 0));
+        pnlLogin.add(separadorUserA, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 160, -1));
 
         txtContra.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtContra.setForeground(new java.awt.Color(153, 153, 153));
@@ -297,339 +307,258 @@ public final class Inicio extends javax.swing.JFrame {
                 txtContraMousePressed(evt);
             }
         });
-        Iniciodesesion.add(txtContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 160, 20));
+        pnlLogin.add(txtContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 160, 20));
 
-        BtnIniciarSA.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        BtnIniciarSA.setForeground(new java.awt.Color(0, 153, 0));
-        BtnIniciarSA.setText("Iniciar Sesión");
-        BtnIniciarSA.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        BtnIniciarSA.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnIniciarSA.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnLogin.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(0, 153, 0));
+        btnLogin.setText("Iniciar Sesión");
+        btnLogin.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnIniciarSAMouseClicked(evt);
+                btnLoginMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BtnIniciarSAMouseEntered(evt);
+                btnLoginMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                BtnIniciarSAMouseExited(evt);
+                btnLoginMouseExited(evt);
             }
         });
-        BtnIniciarSA.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnIniciarSAActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
-        Iniciodesesion.add(BtnIniciarSA, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
+        pnlLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
 
-        lblTitulo.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
-        lblTitulo.setForeground(new java.awt.Color(51, 153, 0));
-        lblTitulo.setText("Inicio de sesión");
-        Iniciodesesion.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
+        lblEncabezadoLogin.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        lblEncabezadoLogin.setForeground(new java.awt.Color(51, 153, 0));
+        lblEncabezadoLogin.setText("Inicio de sesión");
+        pnlLogin.add(lblEncabezadoLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
 
         iconoUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Registrarse.png"))); // NOI18N
-        Iniciodesesion.add(iconoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 45, -1, -1));
+        pnlLogin.add(iconoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 45, -1, -1));
 
         iconoPasword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/secure.png"))); // NOI18N
-        Iniciodesesion.add(iconoPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 105, -1, -1));
+        pnlLogin.add(iconoPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 105, -1, -1));
 
-        agruparbotones.add(Alumno);
-        Alumno.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
-        Alumno.setForeground(new java.awt.Color(51, 153, 0));
-        Alumno.setSelected(true);
-        Alumno.setText("Alumno");
-        Alumno.addActionListener(new java.awt.event.ActionListener() {
+        agruparbotones.add(alumno);
+        alumno.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        alumno.setForeground(new java.awt.Color(51, 153, 0));
+        alumno.setSelected(true);
+        alumno.setText("Alumno");
+        alumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AlumnoActionPerformed(evt);
+                alumnoActionPerformed(evt);
             }
         });
-        Iniciodesesion.add(Alumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, -1));
+        pnlLogin.add(alumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, -1));
 
-        agruparbotones.add(Maestro);
-        Maestro.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
-        Maestro.setForeground(new java.awt.Color(51, 153, 0));
-        Maestro.setText("Maestro");
-        Iniciodesesion.add(Maestro, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, -1, -1));
+        agruparbotones.add(maestro);
+        maestro.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        maestro.setForeground(new java.awt.Color(51, 153, 0));
+        maestro.setText("Maestro");
+        pnlLogin.add(maestro, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, -1, -1));
 
-        BackGround.add(Iniciodesesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, 440, 270));
-
-        acercadeNos.setBackground(new java.awt.Color(255, 255, 255));
-        acercadeNos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                acercadeNosMousePressed(evt);
-            }
-        });
-        acercadeNos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        acercadeNos.add(SeparadorAcercaDeNosotros, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 140, 10));
-
-        BtnAcercaDeNosotros.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        BtnAcercaDeNosotros.setForeground(new java.awt.Color(51, 153, 0));
-        BtnAcercaDeNosotros.setText("Acerca de Nosotros");
-        BtnAcercaDeNosotros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnAcercaDeNosotros.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BtnAcercaDeNosotrosMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                BtnAcercaDeNosotrosMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                BtnAcercaDeNosotrosMousePressed(evt);
-            }
-        });
-        acercadeNos.add(BtnAcercaDeNosotros, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
-        BackGround.add(acercadeNos, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 500, 180, 60));
+        background.add(pnlLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, 440, 270));
 
         pnlAcercaDeNosotros.setBackground(new java.awt.Color(255, 255, 255));
-        pnlAcercaDeNosotros.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        pnlAcercaDeNosotros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlAcercaDeNosotrosMousePressed(evt);
+            }
+        });
         pnlAcercaDeNosotros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlAcercaDeNosotros.add(separadorAcercaDeNosotros, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 140, 10));
 
-        ImagenDesarrollador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Yo.jpeg"))); // NOI18N
-        ImagenDesarrollador.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 0), null));
-        pnlAcercaDeNosotros.add(ImagenDesarrollador, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 120, 150));
+        btnAcercaDeNosotros.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnAcercaDeNosotros.setForeground(new java.awt.Color(51, 153, 0));
+        btnAcercaDeNosotros.setText("Acerca de Nosotros");
+        btnAcercaDeNosotros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAcercaDeNosotros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAcercaDeNosotrosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAcercaDeNosotrosMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnAcercaDeNosotrosMousePressed(evt);
+            }
+        });
+        pnlAcercaDeNosotros.add(btnAcercaDeNosotros, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        background.add(pnlAcercaDeNosotros, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 500, 180, 60));
+
+        pnlRedesDesarrollador.setBackground(new java.awt.Color(255, 255, 255));
+        pnlRedesDesarrollador.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        pnlRedesDesarrollador.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        imagenDesarrollador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Yo.jpeg"))); // NOI18N
+        imagenDesarrollador.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 0), null));
+        pnlRedesDesarrollador.add(imagenDesarrollador, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 120, 150));
 
         lblPiedefoto.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         lblPiedefoto.setForeground(new java.awt.Color(51, 153, 0));
         lblPiedefoto.setText("Developed by Enoc Nehemías García Alcántara");
-        pnlAcercaDeNosotros.add(lblPiedefoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, -1, -1));
+        pnlRedesDesarrollador.add(lblPiedefoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, -1, -1));
 
         lblNumero.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         lblNumero.setForeground(new java.awt.Color(51, 153, 0));
         lblNumero.setText("Numero: +50587620936");
-        pnlAcercaDeNosotros.add(lblNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
+        pnlRedesDesarrollador.add(lblNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
 
         lblEmail.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         lblEmail.setForeground(new java.awt.Color(51, 153, 0));
         lblEmail.setText("Email: Enocgarcia2005@gmail.com");
-        pnlAcercaDeNosotros.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, -1, -1));
+        pnlRedesDesarrollador.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, -1, -1));
 
-        Facebook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/facebook.png"))); // NOI18N
-        Facebook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Facebook.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnFacebook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/facebook.png"))); // NOI18N
+        btnFacebook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFacebook.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                FacebookMousePressed(evt);
+                btnFacebookMousePressed(evt);
             }
         });
-        pnlAcercaDeNosotros.add(Facebook, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
+        pnlRedesDesarrollador.add(btnFacebook, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
 
-        TikTok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tiktok.png"))); // NOI18N
-        TikTok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TikTok.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnTikTok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tiktok.png"))); // NOI18N
+        btnTikTok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTikTok.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                TikTokMousePressed(evt);
+                btnTikTokMousePressed(evt);
             }
         });
-        pnlAcercaDeNosotros.add(TikTok, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, -1, -1));
+        pnlRedesDesarrollador.add(btnTikTok, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, -1, -1));
 
-        Instagram.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/instagram-3.png"))); // NOI18N
-        Instagram.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Instagram.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnInstagram.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/instagram-3.png"))); // NOI18N
+        btnInstagram.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInstagram.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                InstagramMousePressed(evt);
+                btnInstagramMousePressed(evt);
             }
         });
-        pnlAcercaDeNosotros.add(Instagram, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, -1, -1));
+        pnlRedesDesarrollador.add(btnInstagram, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, -1, -1));
 
-        BackGround.add(pnlAcercaDeNosotros, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 600, 570, 360));
+        background.add(pnlRedesDesarrollador, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 600, 570, 360));
 
-        getContentPane().add(BackGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 593));
+        getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 593));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnIniciarSesionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarSesionMouseEntered
-        BtnIniciarSesion.setBorder(new EtchedBorder(1, new Color(51, 180, 0), new Color(51, 180, 0)));
-        BtnIniciarSesion.setForeground(new Color(51, 180, 0));
-    }//GEN-LAST:event_BtnIniciarSesionMouseEntered
+    private void btnIniciarSesionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMouseEntered
+        iniciarSesionVerdeBajo(VERDE_CLARO);
+    }//GEN-LAST:event_btnIniciarSesionMouseEntered
 
-    private void BtnIniciarSesionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarSesionMouseExited
-        BtnIniciarSesion.setBorder(new EtchedBorder(1, new Color(51, 153, 0), new Color(51, 153, 0)));
-        BtnIniciarSesion.setForeground(new Color(51, 153, 0));
-    }//GEN-LAST:event_BtnIniciarSesionMouseExited
+    private void btnIniciarSesionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMouseExited
+        iniciarSesionVerdeOscuro(VERDE_OSCURO);
+    }//GEN-LAST:event_btnIniciarSesionMouseExited
 
-    private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        //   este codigo evita cerrar el programa por error, es decir presionar el boton sin querer hacerlo
         int salir = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres salir?");
         if (salir == 0) {
             System.exit(0);
         }
-    }//GEN-LAST:event_BtnSalirActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void BtnAcercaDeNosotrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAcercaDeNosotrosMouseEntered
-        BtnAcercaDeNosotros.setForeground(new Color(51, 180, 0));
-    }//GEN-LAST:event_BtnAcercaDeNosotrosMouseEntered
+    private void btnAcercaDeNosotrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcercaDeNosotrosMouseEntered
+        btnAcercaDeNosotros.setForeground(VERDE_CLARO);
+    }//GEN-LAST:event_btnAcercaDeNosotrosMouseEntered
 
-    private void BtnAcercaDeNosotrosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAcercaDeNosotrosMouseExited
-        BtnAcercaDeNosotros.setForeground(new Color(51, 153, 0));
-    }//GEN-LAST:event_BtnAcercaDeNosotrosMouseExited
+    private void btnAcercaDeNosotrosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcercaDeNosotrosMouseExited
+        btnAcercaDeNosotros.setForeground(VERDE_OSCURO);
+    }//GEN-LAST:event_btnAcercaDeNosotrosMouseExited
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        animar.JLabelXDerecha(-270, 110, 15, 10, Logo256px);
-        animar.JPanelXIzquierda(1100, 400, 8, 10, PnlInfo);
+        animacionesAbrirVentana();
     }//GEN-LAST:event_formWindowOpened
 
-    private void txtAlumnoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlumnoUsuarioActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
 
-    }//GEN-LAST:event_txtAlumnoUsuarioActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
-    private void BtnIniciarSesionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarSesionMousePressed
-        if (Logo256px.getX() == 110 && PnlInfo.getX() == 400) {
-            animar.JLabelXIzquierda(110, -270, 15, 10, Logo256px);
-            animar.JPanelXDerecha(400, 1100, 8, 10, PnlInfo);
-            animar.JPanelYArriba(600, 150, 10, 10, Iniciodesesion);
-            animar.JLabelYAbajo(-50, 10, 10, 10, BtnVolverAInicio);
-            animar.JLabelYArriba(10, -50, 10, 10, BtnIniciarSesion);
-        }
-        if (pnlAcercaDeNosotros.getY() == 150 && acercadeNos.getY() == 600) {
-            animar.JPanelYAbajo(150, 600, 10, 10, pnlAcercaDeNosotros);
-            animar.JPanelYArriba(600, 500, 10, 1, acercadeNos);
-            animar.JPanelYArriba(600, 150, 10, 10, Iniciodesesion);
-            animar.JLabelYAbajo(-50, 10, 10, 10, BtnVolverAInicio);
-            animar.JLabelYArriba(10, -50, 10, 10, BtnIniciarSesion);
-        }
-    }//GEN-LAST:event_BtnIniciarSesionMousePressed
+    private void btnIniciarSesionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMousePressed
+        animacionesBtnIniciarSesion();
+    }//GEN-LAST:event_btnIniciarSesionMousePressed
 
-    private void BtnIniciarSAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarSAMouseEntered
-        BtnIniciarSA.setForeground(new Color(51, 180, 0));
-    }//GEN-LAST:event_BtnIniciarSAMouseEntered
+    private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
+        btnLogin.setForeground(VERDE_CLARO);
+    }//GEN-LAST:event_btnLoginMouseEntered
 
-    private void BtnIniciarSAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarSAMouseExited
-        BtnIniciarSA.setForeground(new Color(51, 153, 0));
-    }//GEN-LAST:event_BtnIniciarSAMouseExited
+    private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
+        btnLogin.setForeground(VERDE_OSCURO);
+    }//GEN-LAST:event_btnLoginMouseExited
 
-    private void BtnVolverAInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnVolverAInicioMouseEntered
-        BtnVolverAInicio.setForeground(new Color(51, 180, 0));
+    private void btnVolverAInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverAInicioMouseEntered
+        btnVolverAInicio.setForeground(VERDE_CLARO);
 
-    }//GEN-LAST:event_BtnVolverAInicioMouseEntered
+    }//GEN-LAST:event_btnVolverAInicioMouseEntered
 
-    private void BtnVolverAInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnVolverAInicioMouseExited
-        BtnVolverAInicio.setForeground(new Color(51, 153, 0));
-    }//GEN-LAST:event_BtnVolverAInicioMouseExited
+    private void btnVolverAInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverAInicioMouseExited
+        btnVolverAInicio.setForeground(VERDE_OSCURO);
+    }//GEN-LAST:event_btnVolverAInicioMouseExited
 
-    private void BtnVolverAInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnVolverAInicioMousePressed
-        if (Iniciodesesion.getY() == 150 && Logo256px.getX() == -270 && PnlInfo.getX() == 1100) {
-            animar.JPanelYAbajo(150, 600, 10, 10, Iniciodesesion);
-            animar.JLabelXDerecha(-270, 110, 15, 10, Logo256px);
-            animar.JPanelXIzquierda(1100, 400, 8, 10, PnlInfo);
-            animar.JLabelYArriba(10, -50, 10, 5, BtnVolverAInicio);
-            animar.JLabelYAbajo(-50, 10, 10, 10, BtnIniciarSesion);
-        }
-        if (pnlAcercaDeNosotros.getY() == 150 && acercadeNos.getY() == 600) {
-            animar.JPanelYAbajo(150, 600, 10, 10, pnlAcercaDeNosotros);
-            animar.JPanelYArriba(600, 500, 10, 1, acercadeNos);
-            animar.JLabelXDerecha(-270, 110, 15, 10, Logo256px);
-            animar.JPanelXIzquierda(1100, 400, 8, 10, PnlInfo);
-            animar.JLabelYArriba(10, -50, 10, 5, BtnVolverAInicio);
-            animar.JLabelYAbajo(-50, 10, 10, 10, BtnIniciarSesion);
-        }
+    private void btnVolverAInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverAInicioMousePressed
+        animacionesVolverAInicio();
+    }//GEN-LAST:event_btnVolverAInicioMousePressed
 
-
-    }//GEN-LAST:event_BtnVolverAInicioMousePressed
-
-    private void txtAlumnoUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAlumnoUsuarioMousePressed
-        if (txtAlumnoUsuario.getText().equalsIgnoreCase("Introduzca su usuario")) {
-            txtAlumnoUsuario.setText("");
-            txtAlumnoUsuario.setForeground(Color.BLACK);
-        }
-        if (txtContra.getText().isEmpty()) {
-            txtContra.setText("JPasword");
-            txtContra.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtAlumnoUsuarioMousePressed
+    private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
+        quitarPlaceHolderTxtUsuario();
+    }//GEN-LAST:event_txtUsuarioMousePressed
 
     private void txtContraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContraMousePressed
-        if (txtContra.getText().equals("JPasword")) {
-            txtContra.setText("");
-            txtContra.setForeground(Color.BLACK);
-        }
-        if (txtAlumnoUsuario.getText().isEmpty()) {
-            txtAlumnoUsuario.setText("Introduzca su usuario");
-            txtAlumnoUsuario.setForeground(new Color(153, 153, 153));
-        }
+        quitarPlaceHolderTxtContra();
     }//GEN-LAST:event_txtContraMousePressed
 
-    private void FacebookMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FacebookMousePressed
-        String Url = "https://www.facebook.com/enoc.garcia.395/";
-        try {
-            try {
-                Desktop.getDesktop().browse(new URI(Url));
-            } catch (IOException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+    private void btnFacebookMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacebookMousePressed
+        redirigirLink(FACEBOOK);
+    }//GEN-LAST:event_btnFacebookMousePressed
+
+    private void btnTikTokMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTikTokMousePressed
+        redirigirLink(TIKTOK);
+    }//GEN-LAST:event_btnTikTokMousePressed
+
+    private void btnAcercaDeNosotrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcercaDeNosotrosMousePressed
+        animacionesAcercaDeNosotros();
+    }//GEN-LAST:event_btnAcercaDeNosotrosMousePressed
+
+    private void pnlAcercaDeNosotrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlAcercaDeNosotrosMousePressed
+
+    }//GEN-LAST:event_pnlAcercaDeNosotrosMousePressed
+
+    private void btnInstagramMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInstagramMousePressed
+        redirigirLink(INSTAGRAM);
+    }//GEN-LAST:event_btnInstagramMousePressed
+
+    private void pnlHeaderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlHeaderMouseClicked
+
+    }//GEN-LAST:event_pnlHeaderMouseClicked
+
+    private void alumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alumnoActionPerformed
+
+    }//GEN-LAST:event_alumnoActionPerformed
+
+    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+
+    }//GEN-LAST:event_btnLoginMouseClicked
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String[] usuarios = null;
+        String linea = "";
+
+        File alumnosDatos = new File("Alumnos.txt");
+        File maestrosDatos = new File("Maestros.txt");
+        if (alumno.isSelected()) {
+            validarContra(0, 0, usuarios, linea, "Alumnos", alumnosDatos);
         }
-    }//GEN-LAST:event_FacebookMousePressed
-
-    private void TikTokMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TikTokMousePressed
-        String Url = "https://www.tiktok.com/@enocnehemias7?is_from_webapp=1&sender_device=pc";
-        try {
-            try {
-                Desktop.getDesktop().browse(new URI(Url));
-            } catch (IOException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_TikTokMousePressed
-
-    private void BtnAcercaDeNosotrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAcercaDeNosotrosMousePressed
-        if (Logo256px.getX() == 110 && PnlInfo.getX() == 400) {
-            animar.JLabelXIzquierda(110, -270, 15, 10, Logo256px);
-            animar.JPanelXDerecha(400, 1100, 8, 10, PnlInfo);
-            animar.JPanelYAbajo(500, 600, 10, 10, acercadeNos);
-            animar.JPanelYArriba(600, 150, 10, 10, pnlAcercaDeNosotros);
-            animar.JLabelYAbajo(-50, 10, 10, 10, BtnVolverAInicio);
-        }
-
-        if (Iniciodesesion.getY() == 150) {
-            animar.JPanelYAbajo(150, 600, 10, 10, Iniciodesesion);
-            animar.JPanelYAbajo(500, 600, 10, 10, acercadeNos);
-            animar.JPanelYArriba(600, 150, 10, 10, pnlAcercaDeNosotros);
-            animar.JLabelYAbajo(-50, 10, 10, 10, BtnVolverAInicio);
-            animar.JLabelYAbajo(-50, 10, 10, 10, BtnIniciarSesion);
-        }
-    }//GEN-LAST:event_BtnAcercaDeNosotrosMousePressed
-
-    private void acercadeNosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acercadeNosMousePressed
-
-    }//GEN-LAST:event_acercadeNosMousePressed
-
-    private void InstagramMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InstagramMousePressed
-        String Url = "https://www.instagram.com/enocnehemias_/";
-        try {
-            try {
-                Desktop.getDesktop().browse(new URI(Url));
-            } catch (IOException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_InstagramMousePressed
-
-    private void HeaderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HeaderMouseClicked
-
-    }//GEN-LAST:event_HeaderMouseClicked
-
-    private void AlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlumnoActionPerformed
-
-    }//GEN-LAST:event_AlumnoActionPerformed
-
-    private void BtnIniciarSAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarSAMouseClicked
-
-    }//GEN-LAST:event_BtnIniciarSAMouseClicked
-
-    private void BtnIniciarSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarSAActionPerformed
-        if (Alumno.isSelected()) {
-            ValidarContraAlumnos();
-        }
-        if (Maestro.isSelected()) {
-            ValidarContraMaestros();
+        if (maestro.isSelected()) {
+            validarContra(0, 0, usuarios, linea, "Maestros", maestrosDatos);
         }
 
-    }//GEN-LAST:event_BtnIniciarSAActionPerformed
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     public static void main(String args[]) {
 
@@ -640,140 +569,216 @@ public final class Inicio extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Inicio().setVisible(true);
-            }
+        //</editor-fold>
+        java.awt.EventQueue.invokeLater(() -> {
+            new Inicio().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton Alumno;
-    private javax.swing.JPanel BackGround;
-    private javax.swing.JLabel BtnAcercaDeNosotros;
-    private javax.swing.JButton BtnIniciarSA;
-    private javax.swing.JLabel BtnIniciarSesion;
-    private javax.swing.JButton BtnSalir;
-    private javax.swing.JLabel BtnVolverAInicio;
-    private javax.swing.JLabel Facebook;
-    private javax.swing.JPanel Header;
-    private javax.swing.JLabel ImagenDesarrollador;
-    private javax.swing.JPanel Iniciodesesion;
-    private javax.swing.JLabel Instagram;
-    private javax.swing.JLabel Logo256px;
-    private javax.swing.JLabel LogoHeader;
-    private javax.swing.JRadioButton Maestro;
-    private javax.swing.JLabel NombreLogo;
-    private javax.swing.JPanel PnlInfo;
-    private javax.swing.JSeparator SeparadorAcercaDeNosotros;
-    private javax.swing.JSeparator SeparadorContra;
-    private javax.swing.JSeparator SeparadorUserA;
     private javax.swing.JSeparator SepararHeader;
-    private javax.swing.JLabel TikTok;
-    private javax.swing.JPanel acercadeNos;
     private static javax.swing.ButtonGroup agruparbotones;
+    private javax.swing.JRadioButton alumno;
+    private javax.swing.JPanel background;
+    private javax.swing.JLabel btnAcercaDeNosotros;
+    private javax.swing.JLabel btnFacebook;
+    private javax.swing.JLabel btnIniciarSesion;
+    private javax.swing.JLabel btnInstagram;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel btnTikTok;
+    private javax.swing.JLabel btnVolverAInicio;
+    private javax.swing.JLabel copyright;
     private javax.swing.JLabel iconoPasword;
     private javax.swing.JLabel iconoUser;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel imagenDesarrollador;
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblEncabezadoLogin;
+    private javax.swing.JLabel lblLinea1Info;
+    private javax.swing.JLabel lblLinea2Info;
+    private javax.swing.JLabel lblLinea3Info;
+    private javax.swing.JLabel lblLinea4Info;
+    private javax.swing.JLabel lblLinea5Info;
+    private javax.swing.JLabel lblLinea6Info;
     private javax.swing.JLabel lblNumero;
     private javax.swing.JLabel lblPiedefoto;
-    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTituloInfo;
     private javax.swing.JLabel lblUsuarios;
+    private javax.swing.JLabel logoGrande;
+    private javax.swing.JLabel logoPeque;
+    private javax.swing.JRadioButton maestro;
+    private javax.swing.JLabel nombreApp;
     private javax.swing.JPanel pnlAcercaDeNosotros;
-    private javax.swing.JTextField txtAlumnoUsuario;
+    private javax.swing.JPanel pnlDescripcionPrograma;
+    private javax.swing.JPanel pnlHeader;
+    private javax.swing.JPanel pnlLogin;
+    private javax.swing.JPanel pnlRedesDesarrollador;
+    private javax.swing.JSeparator separadorAcercaDeNosotros;
+    private javax.swing.JSeparator separadorContra;
+    private javax.swing.JSeparator separadorUserA;
     private javax.swing.JPasswordField txtContra;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
-    public void Icono() {
+    /*    
+            Configuraciones visual boton  iniciar sesion
+          -----------------------------------------------------------------------
+            iniciarSesionVerdeBajo=cuando el mouse entra al componente
+          -----------------------------------------------------------------------
+             iniciarSesionVerdeOscuro=cuando el mouse sale del componente
+     */
+    public void iniciarSesionVerdeBajo(Color verdeClaro) {
+        btnIniciarSesion.setBorder(new EtchedBorder(1, verdeClaro, verdeClaro));
+        btnIniciarSesion.setForeground(verdeClaro);
+    }
+
+    public void iniciarSesionVerdeOscuro(Color verdeOscuro) {
+        btnIniciarSesion.setBorder(new EtchedBorder(1, verdeOscuro, verdeOscuro));
+        btnIniciarSesion.setForeground(verdeOscuro);
+    }
+
+    /* 
+           * Configuracion de las animaciones en la ventana  
+           * nota: Los if son para evitar que se presione el boton mientras se ejecuta otra animacion, 
+           * esto para evitar bugs
+     */
+    public void animacionesAbrirVentana() {
+        animar.JLabelXDerecha(-270, 110, 15, 10, logoGrande);
+        animar.JPanelXIzquierda(1100, 400, 8, 10, pnlDescripcionPrograma);
+    }
+
+    public void animacionesAcercaDeNosotros() {
+        if (logoGrande.getX() == 110 && pnlDescripcionPrograma.getX() == 400) {
+            animar.JLabelXIzquierda(110, -270, 15, 10, logoGrande);
+            animar.JPanelXDerecha(400, 1100, 8, 10, pnlDescripcionPrograma);
+            animar.JPanelYAbajo(500, 600, 10, 10, pnlAcercaDeNosotros);
+            animar.JPanelYArriba(600, 150, 10, 10, pnlRedesDesarrollador);
+            animar.JLabelYAbajo(-50, 10, 10, 10, btnVolverAInicio);
+        }
+
+        if (pnlLogin.getY() == 150) {
+            animar.JPanelYAbajo(150, 600, 10, 10, pnlLogin);
+            animar.JPanelYAbajo(500, 600, 10, 10, pnlAcercaDeNosotros);
+            animar.JPanelYArriba(600, 150, 10, 10, pnlRedesDesarrollador);
+            animar.JLabelYAbajo(-50, 10, 10, 10, btnVolverAInicio);
+            animar.JLabelYAbajo(-50, 10, 10, 10, btnIniciarSesion);
+        }
+    }
+
+    public void animacionesBtnIniciarSesion() {
+
+        if (logoGrande.getX() == 110 && pnlDescripcionPrograma.getX() == 400) {
+            animar.JLabelXIzquierda(110, -270, 15, 10, logoGrande);
+            animar.JPanelXDerecha(400, 1100, 8, 10, pnlDescripcionPrograma);
+            animar.JPanelYArriba(600, 150, 10, 10, pnlLogin);
+            animar.JLabelYAbajo(-50, 10, 10, 10, btnVolverAInicio);
+            animar.JLabelYArriba(10, -50, 10, 10, btnIniciarSesion);
+        }
+
+        if (pnlRedesDesarrollador.getY() == 150 && pnlAcercaDeNosotros.getY() == 600) {
+            animar.JPanelYAbajo(150, 600, 10, 10, pnlRedesDesarrollador);
+            animar.JPanelYArriba(600, 500, 10, 1, pnlAcercaDeNosotros);
+            animar.JPanelYArriba(600, 150, 10, 10, pnlLogin);
+            animar.JLabelYAbajo(-50, 10, 10, 10, btnVolverAInicio);
+            animar.JLabelYArriba(10, -50, 10, 10, btnIniciarSesion);
+        }
+    }
+
+    public void animacionesVolverAInicio() {
+
+        if (pnlLogin.getY() == 150 && logoGrande.getX() == -270 && pnlDescripcionPrograma.getX() == 1100) {
+            animar.JPanelYAbajo(150, 600, 10, 10, pnlLogin);
+            animar.JLabelXDerecha(-270, 110, 15, 10, logoGrande);
+            animar.JPanelXIzquierda(1100, 400, 8, 10, pnlDescripcionPrograma);
+            animar.JLabelYArriba(10, -50, 10, 5, btnVolverAInicio);
+            animar.JLabelYAbajo(-50, 10, 10, 10, btnIniciarSesion);
+        }
+
+        if (pnlRedesDesarrollador.getY() == 150 && pnlAcercaDeNosotros.getY() == 600) {
+            animar.JPanelYAbajo(150, 600, 10, 10, pnlRedesDesarrollador);
+            animar.JPanelYArriba(600, 500, 10, 1, pnlAcercaDeNosotros);
+            animar.JLabelXDerecha(-270, 110, 15, 10, logoGrande);
+            animar.JPanelXIzquierda(1100, 400, 8, 10, pnlDescripcionPrograma);
+            animar.JLabelYArriba(10, -50, 10, 5, btnVolverAInicio);
+            animar.JLabelYAbajo(-50, 10, 10, 10, btnIniciarSesion);
+        }
+    }
+
+    //  Cambio de icono por defecto de java
+    public void icono() {
         URL url = getClass().getResource("/Imagenes/Logo.png");
         ImageIcon I = new ImageIcon(url);
         this.setIconImage(I.getImage());
 
     }
 
-    public void ValidarContraAlumnos() {
-        int nLineas = 0;
-        int i = 0;
-        String[] Usuarios = null;
-        String Linea;
-        String Identificador = "Alumnos";
+    //Validaciones de place holder en campos de inicio de sesion
+    public void quitarPlaceHolderTxtUsuario() {
+        if (txtUsuario.getText().equalsIgnoreCase("Introduzca su usuario")) {
+            txtUsuario.setText("");
+            txtUsuario.setForeground(NEGRO);
+        }
+        if (txtContra.getText().isEmpty()) {
+            txtContra.setText("JPasword");
+            txtContra.setForeground(GRIS);
+        }
+    }
 
+    public void quitarPlaceHolderTxtContra() {
+        if (txtContra.getText().equals("JPasword")) {
+            txtContra.setText("");
+            txtContra.setForeground(NEGRO);
+        }
+        if (txtUsuario.getText().isEmpty()) {
+            txtUsuario.setText("Introduzca su usuario");
+            txtUsuario.setForeground(GRIS);
+        }
+    }
+
+    //  metodo que redirige al navegador segun el link que se le ingrese al ser invocado
+    public void redirigirLink(String url) {
         try {
-            sc = new Scanner(Alumnos);
-            FileReader Fr = new FileReader(Alumnos);
-            BufferedReader leer = new BufferedReader(Fr);
-
-            while ((Linea = leer.readLine()) != null) {
-                nLineas++;
+            try {
+                Desktop.getDesktop().browse(new URI(url));
+            } catch (IOException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Usuarios = new String[nLineas];
-            while (sc.hasNext()) {
-                Usuarios[i++] = sc.nextLine();
-            }
-            Intentos++;
-            usuario = txtAlumnoUsuario.getText();
-            conrtraseña = txtContra.getText();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-            Seguridad S = new Seguridad();
-            S.ValidarUsuario(Usuarios, usuario, conrtraseña, Intentos, Identificador);
+    public void validarContra(int longitudArray, int indice, String[] usuarios, String linea, String identificador, File fichero) {
+        try {
+            Scanner escaner = new Scanner(fichero);
+            FileReader archivo = new FileReader(fichero);
+            BufferedReader leer = new BufferedReader(archivo);
+
+            while ((linea = leer.readLine()) != null) {
+                longitudArray++;
+            }
+            usuarios = new String[longitudArray];
+            while (escaner.hasNext()) {
+                usuarios[indice++] = escaner.nextLine();
+            }
+            intentos++;
+            usuario = txtUsuario.getText();
+            contra = txtContra.getText();
+
+            Seguridad verificacion = new Seguridad();
+            verificacion.ValidarUsuario(usuarios, usuario, contra, intentos, identificador);
         } catch (FileNotFoundException ex) {
-
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en la base de datos " + ex.getMessage());
         } catch (IOException ex) {
-
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en la base de datos " + ex.getMessage());
         }
 
     }
 
-    public void ValidarContraMaestros() {
-        int nLineas = 0;
-        int i = 0;
-        String[] Usuarios = null;
-        String Linea;
-        String Identificador = "Maestros";
-
-        try {
-            sc = new Scanner(Maestros);
-            FileReader Fr = new FileReader(Maestros);
-            BufferedReader leer = new BufferedReader(Fr);
-
-            while ((Linea = leer.readLine()) != null) {
-                nLineas++;
-            }
-            Usuarios = new String[nLineas];
-            while (sc.hasNext()) {
-                Usuarios[i++] = sc.nextLine();
-            }
-            Intentos++;
-            usuario = txtAlumnoUsuario.getText();
-            conrtraseña = txtContra.getText();
-
-            Seguridad S = new Seguridad();
-            S.ValidarUsuario(Usuarios, usuario, conrtraseña, Intentos, Identificador);
-        } catch (FileNotFoundException ex) {
-
-        } catch (IOException ex) {
-
-        }
-
-    }
 }
