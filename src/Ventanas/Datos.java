@@ -1,82 +1,86 @@
 package Ventanas;
 
 public class Datos {
+    //Atributos
 
-    String Nombres;
-    String Carnet;
-    String Asignatura;
-    double Ipacial;
-    double IIparcial;
-    double Acumulado;
-    double NF;
+    private String nombres;
+    private String carnet;
+    private String asignatura;
+    private double primerParcial;
+    private double segundoParcial;
+    private double acumulado;
+    private double notaFinal;
 
-    public Datos(String Nombres, String Carnet, String Asignatura, double Ipacial, double IIparcial, double Acumulado, double NF) {
-        this.Nombres = Nombres;
-        this.Carnet = Carnet;
-        this.Asignatura = Asignatura;
-        this.Ipacial = Ipacial;
-        this.IIparcial = IIparcial;
-        this.Acumulado = Acumulado;
-        this.NF = NF;
+    //Constructor parametrizado
+    public Datos(String nombres, String carnet, String asignatura, double primerPacial, double segundoParcial, double acumulado, double notaFinal) {
+        this.nombres = nombres;
+        this.carnet = carnet;
+        this.asignatura = asignatura;
+        this.primerParcial = primerPacial;
+        this.segundoParcial = segundoParcial;
+        this.acumulado = acumulado;
+        this.notaFinal = notaFinal;
     }
 
+    //Constructor vacio
     public Datos() {
     }
 
-    public double getNF() {
-        return NF;
+    //Getters y Setters
+    public double getNotaFinal() {
+        return notaFinal;
     }
 
-    public void setNF(double NF) {
-        this.NF = NF;
+    public void setNotaFinal(double notaFinal) {
+        this.notaFinal = notaFinal;
     }
 
     public String getNombres() {
-        return Nombres;
+        return nombres;
     }
 
-    public void setNombres(String Nombres) {
-        this.Nombres = Nombres;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
     public String getCarnet() {
-        return Carnet;
+        return carnet;
     }
 
-    public void setCarnet(String Carnet) {
-        this.Carnet = Carnet;
+    public void setCarnet(String carnet) {
+        this.carnet = carnet;
     }
 
     public String getAsignatura() {
-        return Asignatura;
+        return asignatura;
     }
 
-    public void setAsignatura(String Asignatura) {
-        this.Asignatura = Asignatura;
+    public void setAsignatura(String asignatura) {
+        this.asignatura = asignatura;
     }
 
-    public double getIpacial() {
-        return Ipacial;
+    public double getPrimerPacial() {
+        return primerParcial;
     }
 
-    public void setIpacial(double Ipacial) {
-        this.Ipacial = Ipacial;
+    public void setPrimerPacial(double primerParcial) {
+        this.primerParcial = primerParcial;
     }
 
-    public double getIIparcial() {
-        return IIparcial;
+    public double getSegundoParcial() {
+        return segundoParcial;
     }
 
-    public void setIIparcial(double IIparcial) {
-        this.IIparcial = IIparcial;
+    public void setSegundoParcial(double segundoParcial) {
+        this.segundoParcial = segundoParcial;
     }
 
     public double getAcumulado() {
-        return Acumulado;
+        return acumulado;
     }
 
-    public void setAcumulado(double Acumulado) {
-        this.Acumulado = Acumulado;
+    public void setAcumulado(double acumulado) {
+        this.acumulado = acumulado;
     }
 
 }

@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 public class FrmAlumnos extends javax.swing.JFrame {
 
     File Notas = new File("Notas.txt");
-    private static String User;
     Animaciones animar = new Animaciones();
     String[] Cabecera = {"Nombres y Apellidos", "N de Carnet",
         "Asignatura", "I parcial", "II parcial", "Acumulado", "Nota Final"};
@@ -32,9 +31,7 @@ public class FrmAlumnos extends javax.swing.JFrame {
         TbAlumnos.getColumnModel().getColumn(0).setPreferredWidth(200);
     }
 
-    public void setUser(String User) {
-        FrmAlumnos.User = User;
-    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -345,7 +342,7 @@ public class FrmAlumnos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
-        int salir = JOptionPane.showConfirmDialog(null, User + "\n¿Estas seguro que quieres cerrar sesion?");
+        int salir = JOptionPane.showConfirmDialog(null, "\n¿Estas seguro que quieres cerrar sesion?");
         if (salir == 0) {
             this.dispose();
         }

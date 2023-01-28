@@ -21,76 +21,89 @@ import javax.swing.table.DefaultTableModel;
 
 public final class FrmMaestros extends javax.swing.JFrame {
 
-    private static String User;
-    File Notas = new File("Notas.txt");
-    Animaciones animar = new Animaciones();
-    String[] Cabecera = {"Nombres y Apellidos", "N de Carnet",
+
+    /*Arrays*/
+    final String[] ENCABEZADO_COLUMNAS = {"Nombres y Apellidos", "N de Carnet",
         "Asignatura", "I parcial", "II parcial", "Acumulado", "Nota Final"};
-    String[][] datos = {};
-    DefaultTableModel MaestrosT = new DefaultTableModel(datos, Cabecera);
-    String nNota;
-    String aNota;
-    Datos D = new Datos();
-    ArrayList<Datos> DatosT = new ArrayList<Datos>();
+    String[][] informacion = {};
+    ArrayList<Datos> datosTabla = new ArrayList<>();
+    /*Objetos*/
+    Animaciones animar = new Animaciones();
+    Datos datosAcademicos = new Datos();
+    DefaultTableModel modeloTabla = new DefaultTableModel(informacion, ENCABEZADO_COLUMNAS);
+    File notas = new File("Notas.txt");
+    /*variables constantes*/
+    //colores
+    private final Color BLANCO = new Color(255, 255, 255);
+    private final Color VERDE_OSCURO = new Color(51, 153, 0);
+    private final Color VERDE_CLARO = new Color(51, 180, 0);
+    //enteros
+    private final int ALTURA_FILAS = 25;
+    private final int ANCHO_COLUMNAS = 200;
+    //fuentes
+    private final Font TIMES_NEW_ROMAN = new Font("Times New Roman", Font.PLAIN, 18);
+
+    /*variables estaticas*/
+    //variables comunes
+    private String nombresAlumno;
+    private String numeroCarnet;
+    private String asignatura;
+    private double notaPrimerParcial;
+    private double notaSegundoParcial;
+    private double notaAcumulado;
+    private double notaFinal;
+    private String registroModificado;
+    private String registroNormal;
+    private String registro;
 
     public FrmMaestros() {
         initComponents();
-        TbMaestros.setModel(MaestrosT);
-        TbMaestros.getTableHeader().setFont(new Font("Times New Roman", Font.PLAIN, 18));
-        TbMaestros.getTableHeader().setOpaque(false);
-        TbMaestros.getTableHeader().setBackground(new Color(51, 153, 0));
-        TbMaestros.getTableHeader().setForeground(new Color(255, 255, 255));
-        TbMaestros.setRowHeight(25);
-        TbMaestros.getColumnModel().getColumn(0).setPreferredWidth(200);
+        configTable(modeloTabla);
         btnEliminar.setEnabled(false);
         btnModificar.setEnabled(false);
-        Mostrar();
-    }
-
-    public static void setUser(String User) {
-        FrmMaestros.User = User;
+        mostrarInfoEnCampos();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        BackGround = new javax.swing.JPanel();
-        BtnSalir = new javax.swing.JButton();
-        BtnControldeNotas = new javax.swing.JLabel();
+        background = new javax.swing.JPanel();
+        btnSalir = new javax.swing.JButton();
+        btnControldeNotas = new javax.swing.JLabel();
         pnlBienvenida = new javax.swing.JPanel();
         lblElegir = new javax.swing.JLabel();
-        tituloBienvenida1 = new javax.swing.JLabel();
-        Logo1 = new javax.swing.JLabel();
+        lblTituloBienvenida = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
         PnlModificar = new javax.swing.JPanel();
-        CbxModificar = new javax.swing.JComboBox<>();
+        cbxOpcionesModificar = new javax.swing.JComboBox<>();
         lblModificar = new javax.swing.JLabel();
-        BtnSeleccionar = new javax.swing.JButton();
-        BtnVolver = new javax.swing.JButton();
-        BtnGuardarCambios = new javax.swing.JButton();
-        PnlControlNotas = new javax.swing.JPanel();
+        btnSeleccionar = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
+        btnGuardarCambios = new javax.swing.JButton();
+        pnlControlNotas = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         lblNombres = new javax.swing.JLabel();
         txtNombres = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        lblIIparcial = new javax.swing.JLabel();
-        txtIIparcial = new javax.swing.JTextField();
+        lblSegundoParcial = new javax.swing.JLabel();
+        txtSegundoParcial = new javax.swing.JTextField();
         lblCarnet = new javax.swing.JLabel();
         txtCarnet = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         lblAcumulado = new javax.swing.JLabel();
-        lblIparcial = new javax.swing.JLabel();
+        lblPrimerParcial = new javax.swing.JLabel();
         txtAcumulado = new javax.swing.JTextField();
-        txtIparcial = new javax.swing.JTextField();
+        txtPrimerParcial = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         btnGuardar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TbMaestros = new javax.swing.JTable();
-        lbltituloTabla = new javax.swing.JLabel();
+        tbRegistroNotas = new javax.swing.JTable();
+        lblTituloTabla = new javax.swing.JLabel();
         lblAsignatura = new javax.swing.JLabel();
         txtAsignatura = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
@@ -107,41 +120,41 @@ public final class FrmMaestros extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BackGround.setBackground(new java.awt.Color(255, 255, 255));
-        BackGround.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
-        BackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        background.setBackground(new java.awt.Color(255, 255, 255));
+        background.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BtnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exit-2.png"))); // NOI18N
-        BtnSalir.setBorder(null);
-        BtnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnSalir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
-        BtnSalir.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
-        BtnSalir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
-        BtnSalir.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exit-2.png"))); // NOI18N
+        btnSalir.setBorder(null);
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
+        btnSalir.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
+        btnSalir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ExitOn.png"))); // NOI18N
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSalirActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
-        BackGround.add(BtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1062, 1, 36, 36));
+        background.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1062, 1, 36, 36));
 
-        BtnControldeNotas.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        BtnControldeNotas.setForeground(new java.awt.Color(51, 153, 0));
-        BtnControldeNotas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BtnControldeNotas.setText("Control de notas");
-        BtnControldeNotas.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        BtnControldeNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnControldeNotas.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnControldeNotas.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        btnControldeNotas.setForeground(new java.awt.Color(51, 153, 0));
+        btnControldeNotas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnControldeNotas.setText("Control de notas");
+        btnControldeNotas.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        btnControldeNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnControldeNotas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BtnControldeNotasMouseEntered(evt);
+                btnControldeNotasMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                BtnControldeNotasMouseExited(evt);
+                btnControldeNotasMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                BtnControldeNotasMousePressed(evt);
+                btnControldeNotasMousePressed(evt);
             }
         });
-        BackGround.add(BtnControldeNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 290, 150));
+        background.add(btnControldeNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 290, 150));
 
         pnlBienvenida.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -149,11 +162,11 @@ public final class FrmMaestros extends javax.swing.JFrame {
         lblElegir.setForeground(new java.awt.Color(51, 153, 0));
         lblElegir.setText("Elija una opcion");
 
-        tituloBienvenida1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        tituloBienvenida1.setForeground(new java.awt.Color(51, 153, 0));
-        tituloBienvenida1.setText("Bienvenid@ Maestr@ a Grading System");
+        lblTituloBienvenida.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        lblTituloBienvenida.setForeground(new java.awt.Color(51, 153, 0));
+        lblTituloBienvenida.setText("Bienvenid@ Maestr@ a Grading System");
 
-        Logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good-mark-2.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/good-mark-2.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlBienvenidaLayout = new javax.swing.GroupLayout(pnlBienvenida);
         pnlBienvenida.setLayout(pnlBienvenidaLayout);
@@ -161,13 +174,13 @@ public final class FrmMaestros extends javax.swing.JFrame {
             pnlBienvenidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBienvenidaLayout.createSequentialGroup()
                 .addGap(77, 77, 77)
-                .addComponent(tituloBienvenida1)
+                .addComponent(lblTituloBienvenida)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBienvenidaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlBienvenidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBienvenidaLayout.createSequentialGroup()
-                        .addComponent(Logo1)
+                        .addComponent(lblLogo)
                         .addGap(189, 189, 189))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBienvenidaLayout.createSequentialGroup()
                         .addComponent(lblElegir)
@@ -177,82 +190,82 @@ public final class FrmMaestros extends javax.swing.JFrame {
             pnlBienvenidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBienvenidaLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(tituloBienvenida1)
+                .addComponent(lblTituloBienvenida)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Logo1)
+                .addComponent(lblLogo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(lblElegir)
                 .addContainerGap())
         );
 
-        BackGround.add(pnlBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, -380, 640, 360));
+        background.add(pnlBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, -380, 640, 360));
 
         PnlModificar.setBackground(new java.awt.Color(255, 255, 255));
         PnlModificar.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
         PnlModificar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        CbxModificar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        CbxModificar.setForeground(new java.awt.Color(51, 153, 0));
-        CbxModificar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombres y Apellidos", "N de Carnet", "Asignatura", "I parcial", "II parcial", "Acumulado" }));
-        CbxModificar.setSelectedIndex(-1);
-        CbxModificar.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        PnlModificar.add(CbxModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 200, -1));
+        cbxOpcionesModificar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        cbxOpcionesModificar.setForeground(new java.awt.Color(51, 153, 0));
+        cbxOpcionesModificar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombres y Apellidos", "N de Carnet", "Asignatura", "I parcial", "II parcial", "Acumulado" }));
+        cbxOpcionesModificar.setSelectedIndex(-1);
+        cbxOpcionesModificar.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        PnlModificar.add(cbxOpcionesModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 200, -1));
 
         lblModificar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         lblModificar.setForeground(new java.awt.Color(51, 153, 0));
         lblModificar.setText("Seleccione el campo a Modificar");
         PnlModificar.add(lblModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 8, -1, -1));
 
-        BtnSeleccionar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        BtnSeleccionar.setForeground(new java.awt.Color(51, 153, 0));
-        BtnSeleccionar.setText("Seleccionar");
-        BtnSeleccionar.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        BtnSeleccionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+        btnSeleccionar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnSeleccionar.setForeground(new java.awt.Color(51, 153, 0));
+        btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        btnSeleccionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSeleccionarActionPerformed(evt);
+                btnSeleccionarActionPerformed(evt);
             }
         });
-        PnlModificar.add(BtnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 70, -1));
+        PnlModificar.add(btnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 70, -1));
 
-        BtnVolver.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        BtnVolver.setForeground(new java.awt.Color(51, 153, 0));
-        BtnVolver.setText("Regresar");
-        BtnVolver.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        BtnVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnVolver.addActionListener(new java.awt.event.ActionListener() {
+        btnVolver.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(51, 153, 0));
+        btnVolver.setText("Regresar");
+        btnVolver.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        btnVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnVolverActionPerformed(evt);
+                btnVolverActionPerformed(evt);
             }
         });
-        PnlModificar.add(BtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 70, -1));
+        PnlModificar.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 70, -1));
 
-        BtnGuardarCambios.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        BtnGuardarCambios.setForeground(new java.awt.Color(51, 153, 0));
-        BtnGuardarCambios.setText("Guardar");
-        BtnGuardarCambios.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        BtnGuardarCambios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardarCambios.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnGuardarCambios.setForeground(new java.awt.Color(51, 153, 0));
+        btnGuardarCambios.setText("Guardar");
+        btnGuardarCambios.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        btnGuardarCambios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnGuardarCambiosActionPerformed(evt);
+                btnGuardarCambiosActionPerformed(evt);
             }
         });
-        PnlModificar.add(BtnGuardarCambios, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 60, -1));
+        PnlModificar.add(btnGuardarCambios, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 60, -1));
 
-        BackGround.add(PnlModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-300, 490, 240, 100));
+        background.add(PnlModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-300, 490, 240, 100));
 
-        PnlControlNotas.setBackground(new java.awt.Color(255, 255, 255));
-        PnlControlNotas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlControlNotas.setBackground(new java.awt.Color(255, 255, 255));
+        pnlControlNotas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTitulo.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(51, 153, 0));
         lblTitulo.setText("Control de Notas");
-        PnlControlNotas.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, -1, -1));
+        pnlControlNotas.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, -1, -1));
 
         lblNombres.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblNombres.setForeground(new java.awt.Color(51, 153, 0));
         lblNombres.setText("Nombres y apellidos de el/la estudiante:");
-        PnlControlNotas.add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        pnlControlNotas.add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         txtNombres.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txtNombres.setBorder(null);
@@ -261,50 +274,50 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 txtNombresKeyTyped(evt);
             }
         });
-        PnlControlNotas.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 580, -1));
+        pnlControlNotas.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 580, -1));
 
         jSeparator1.setForeground(new java.awt.Color(51, 153, 0));
-        PnlControlNotas.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 590, 10));
+        pnlControlNotas.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 590, 10));
 
-        lblIIparcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblIIparcial.setForeground(new java.awt.Color(51, 153, 0));
-        lblIIparcial.setText("II parcial:");
-        PnlControlNotas.add(lblIIparcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
+        lblSegundoParcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblSegundoParcial.setForeground(new java.awt.Color(51, 153, 0));
+        lblSegundoParcial.setText("II parcial:");
+        pnlControlNotas.add(lblSegundoParcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
 
-        txtIIparcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtIIparcial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtIIparcial.setBorder(null);
-        txtIIparcial.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtSegundoParcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtSegundoParcial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSegundoParcial.setBorder(null);
+        txtSegundoParcial.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIIparcialKeyTyped(evt);
+                txtSegundoParcialKeyTyped(evt);
             }
         });
-        PnlControlNotas.add(txtIIparcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, 110, -1));
+        pnlControlNotas.add(txtSegundoParcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, 110, -1));
 
         lblCarnet.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblCarnet.setForeground(new java.awt.Color(51, 153, 0));
         lblCarnet.setText("N de Carnet:");
-        PnlControlNotas.add(lblCarnet, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        pnlControlNotas.add(lblCarnet, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
         txtCarnet.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txtCarnet.setBorder(null);
-        PnlControlNotas.add(txtCarnet, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 150, -1));
+        pnlControlNotas.add(txtCarnet, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 150, -1));
 
         jSeparator2.setForeground(new java.awt.Color(51, 153, 0));
-        PnlControlNotas.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, 110, 10));
+        pnlControlNotas.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, 110, 10));
 
         jSeparator3.setForeground(new java.awt.Color(51, 153, 0));
-        PnlControlNotas.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 150, 10));
+        pnlControlNotas.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 150, 10));
 
         lblAcumulado.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblAcumulado.setForeground(new java.awt.Color(51, 153, 0));
         lblAcumulado.setText("Acumulado:");
-        PnlControlNotas.add(lblAcumulado, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 120, -1, -1));
+        pnlControlNotas.add(lblAcumulado, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 120, -1, -1));
 
-        lblIparcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblIparcial.setForeground(new java.awt.Color(51, 153, 0));
-        lblIparcial.setText("I parcial:");
-        PnlControlNotas.add(lblIparcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, -1, -1));
+        lblPrimerParcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblPrimerParcial.setForeground(new java.awt.Color(51, 153, 0));
+        lblPrimerParcial.setText("I parcial:");
+        pnlControlNotas.add(lblPrimerParcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, -1, -1));
 
         txtAcumulado.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txtAcumulado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -314,23 +327,23 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 txtAcumuladoKeyTyped(evt);
             }
         });
-        PnlControlNotas.add(txtAcumulado, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 120, 110, -1));
+        pnlControlNotas.add(txtAcumulado, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 120, 110, -1));
 
-        txtIparcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtIparcial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtIparcial.setBorder(null);
-        txtIparcial.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtPrimerParcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtPrimerParcial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPrimerParcial.setBorder(null);
+        txtPrimerParcial.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIparcialKeyTyped(evt);
+                txtPrimerParcialKeyTyped(evt);
             }
         });
-        PnlControlNotas.add(txtIparcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 110, -1));
+        pnlControlNotas.add(txtPrimerParcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 110, -1));
 
         jSeparator4.setForeground(new java.awt.Color(51, 153, 0));
-        PnlControlNotas.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 140, 110, 10));
+        pnlControlNotas.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 140, 110, 10));
 
         jSeparator5.setForeground(new java.awt.Color(51, 153, 0));
-        PnlControlNotas.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 110, 10));
+        pnlControlNotas.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 110, 10));
 
         btnGuardar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(51, 153, 0));
@@ -342,7 +355,7 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        PnlControlNotas.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, 100, -1));
+        pnlControlNotas.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, 100, -1));
 
         btnNuevo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnNuevo.setForeground(new java.awt.Color(51, 153, 0));
@@ -354,7 +367,7 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 btnNuevoActionPerformed(evt);
             }
         });
-        PnlControlNotas.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 85, 100, -1));
+        pnlControlNotas.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 85, 100, -1));
 
         btnRegresar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(51, 153, 0));
@@ -367,12 +380,12 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-        PnlControlNotas.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 190, 100, -1));
+        pnlControlNotas.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 190, 100, -1));
 
-        TbMaestros.setAutoCreateRowSorter(true);
-        TbMaestros.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
-        TbMaestros.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        TbMaestros.setModel(new javax.swing.table.DefaultTableModel(
+        tbRegistroNotas.setAutoCreateRowSorter(true);
+        tbRegistroNotas.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
+        tbRegistroNotas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        tbRegistroNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -389,31 +402,31 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
             }
         ));
-        TbMaestros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TbMaestros.setGridColor(new java.awt.Color(0, 0, 0));
-        TbMaestros.setRowHeight(25);
-        TbMaestros.setSelectionBackground(new java.awt.Color(0, 204, 0));
-        TbMaestros.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        TbMaestros.setShowHorizontalLines(true);
-        TbMaestros.setShowVerticalLines(true);
-        TbMaestros.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbRegistroNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tbRegistroNotas.setGridColor(new java.awt.Color(0, 0, 0));
+        tbRegistroNotas.setRowHeight(25);
+        tbRegistroNotas.setSelectionBackground(new java.awt.Color(0, 204, 0));
+        tbRegistroNotas.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tbRegistroNotas.setShowHorizontalLines(true);
+        tbRegistroNotas.setShowVerticalLines(true);
+        tbRegistroNotas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                TbMaestrosMousePressed(evt);
+                tbRegistroNotasMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(TbMaestros);
+        jScrollPane1.setViewportView(tbRegistroNotas);
 
-        PnlControlNotas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 1080, 290));
+        pnlControlNotas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 1080, 290));
 
-        lbltituloTabla.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
-        lbltituloTabla.setForeground(new java.awt.Color(51, 153, 0));
-        lbltituloTabla.setText("Listado de Estudiantes");
-        PnlControlNotas.add(lbltituloTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, -1, -1));
+        lblTituloTabla.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
+        lblTituloTabla.setForeground(new java.awt.Color(51, 153, 0));
+        lblTituloTabla.setText("Listado de Estudiantes");
+        pnlControlNotas.add(lblTituloTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, -1, -1));
 
         lblAsignatura.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblAsignatura.setForeground(new java.awt.Color(51, 153, 0));
         lblAsignatura.setText("Asignatura:");
-        PnlControlNotas.add(lblAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 160, -1, -1));
+        pnlControlNotas.add(lblAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 160, -1, -1));
 
         txtAsignatura.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txtAsignatura.setBorder(null);
@@ -422,10 +435,10 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 txtAsignaturaKeyTyped(evt);
             }
         });
-        PnlControlNotas.add(txtAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 130, -1));
+        pnlControlNotas.add(txtAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 130, -1));
 
         jSeparator6.setForeground(new java.awt.Color(51, 153, 0));
-        PnlControlNotas.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 130, 10));
+        pnlControlNotas.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 130, 10));
 
         btnModificar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(51, 153, 0));
@@ -438,7 +451,7 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-        PnlControlNotas.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 120, 100, -1));
+        pnlControlNotas.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 120, 100, -1));
 
         btnEliminar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(51, 153, 0));
@@ -451,58 +464,49 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        PnlControlNotas.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 155, 100, -1));
+        pnlControlNotas.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 155, 100, -1));
 
-        BackGround.add(PnlControlNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 1080, 540));
+        background.add(pnlControlNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 1080, 540));
 
-        getContentPane().add(BackGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 593));
+        getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 593));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
-        int salir = JOptionPane.showConfirmDialog(null, "Profe: " + User + "\n¿Estas seguro que quieres cerrar sesion?");
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        int salir = JOptionPane.showConfirmDialog(null, "Profe \n¿Estas seguro que quieres cerrar sesion?");
         if (salir == 0) {
             this.dispose();
         }
-    }//GEN-LAST:event_BtnSalirActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void BtnControldeNotasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnControldeNotasMousePressed
-        if (PnlControlNotas.getY() == 600 && BtnControldeNotas.getY() == 380 && pnlBienvenida.getY() == 10) {
-            animar.JPanelYArriba(10, -380, 10, 10, pnlBienvenida);
-            animar.JLabelYAbajo(380, 600, 10, 10, BtnControldeNotas);
-            animar.JPanelYArriba(600, 10, 10, 10, PnlControlNotas);
-        }
-    }//GEN-LAST:event_BtnControldeNotasMousePressed
+    private void btnControldeNotasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControldeNotasMousePressed
+        animacionesBtnControlDeNotas();
+    }//GEN-LAST:event_btnControldeNotasMousePressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         animar.JPanelYAbajo(-380, 10, 10, 10, pnlBienvenida);
-        LlenarTabla();
+        llenarTabla();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        if (PnlControlNotas.getY() == 10 && BtnControldeNotas.getY() == 600 && pnlBienvenida.getY() == -380) {
-            animar.JPanelYArriba(-380, 10, 10, 10, pnlBienvenida);
-            animar.JLabelYAbajo(600, 380, 10, 10, BtnControldeNotas);
-            animar.JPanelYArriba(10, 600, 10, 10, PnlControlNotas);
-            LimpiarCampos();
-        }
+        animacionesBtnRegresar();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void BtnControldeNotasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnControldeNotasMouseEntered
-        if (BtnControldeNotas.getY() == 380) {
-            BtnControldeNotas.setForeground(new Color(51, 180, 0));
+    private void btnControldeNotasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControldeNotasMouseEntered
+        if (btnControldeNotas.getY() == 380) {
+            btnControldeNotas.setForeground(VERDE_CLARO);
         }
-    }//GEN-LAST:event_BtnControldeNotasMouseEntered
+    }//GEN-LAST:event_btnControldeNotasMouseEntered
 
-    private void BtnControldeNotasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnControldeNotasMouseExited
-        if (BtnControldeNotas.getY() == 380) {
-            BtnControldeNotas.setForeground(new Color(51, 153, 0));
+    private void btnControldeNotasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControldeNotasMouseExited
+        if (btnControldeNotas.getY() == 380) {
+            btnControldeNotas.setForeground(VERDE_OSCURO);
         }
-    }//GEN-LAST:event_BtnControldeNotasMouseExited
+    }//GEN-LAST:event_btnControldeNotasMouseExited
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        LimpiarCampos();
+        limpiarCampos();
         activarCampos();
         txtNombres.requestFocus();
         btnModificar.setEnabled(false);
@@ -511,43 +515,39 @@ public final class FrmMaestros extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Guardar();
+        guardarEnFichero();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void BtnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSeleccionarActionPerformed
-        if (CbxModificar.getSelectedIndex() == -1) {
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        if (cbxOpcionesModificar.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Selecciona una opcion");
-        } else if (txtNombres.getText().isEmpty()
-                || txtCarnet.getText().isEmpty()
-                || txtAcumulado.getText().isEmpty()
-                || txtIparcial.getText().isEmpty()
-                || txtIIparcial.getText().isEmpty()) {
+        } else if (camposVacios()) {
+            //este condicion es una medida de seguridad si el boton modificar se puede seleccionar sin haber hecho click en la tabla
             JOptionPane.showMessageDialog(null, "Seleccione un registro");
-
         } else {
             SeleccionCbxModificar();
         }
-    }//GEN-LAST:event_BtnSeleccionarActionPerformed
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
 
-    private void BtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVolverActionPerformed
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         animar.JPanelXIzquierda(20, -300, 15, 10, PnlModificar);
         desactivarCampos();
-        LimpiarCampos();
-        CbxModificar.setSelectedIndex(-1);
+        limpiarCampos();
+        cbxOpcionesModificar.setSelectedIndex(-1);
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(true);
         btnNuevo.setEnabled(true);
         btnRegresar.setEnabled(true);
-    }//GEN-LAST:event_BtnVolverActionPerformed
+    }//GEN-LAST:event_btnVolverActionPerformed
 
-    private void BtnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarCambiosActionPerformed
-        if (CbxModificar.getSelectedIndex() == -1) {
+    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
+        if (cbxOpcionesModificar.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Primero selleccione un campo y realize los cambios correspondientes");
         } else {
-            Modificar();
+            modificarFichero("", "");
         }
-    }//GEN-LAST:event_BtnGuardarCambiosActionPerformed
+    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         animar.JPanelXDerecha(-300, 20, 15, 10, PnlModificar);
@@ -559,38 +559,37 @@ public final class FrmMaestros extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (TbMaestros.getRowCount() == 1) {
+        if (tbRegistroNotas.getRowCount() == 1) {
             JOptionPane.showMessageDialog(null, "La tabla no puede estar vacia");
         } else {
-
-            Eliminar();
+            eliminar();
             btnEliminar.setEnabled(false);
             btnModificar.setEnabled(false);
             btnGuardar.setEnabled(true);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void TbMaestrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbMaestrosMousePressed
+    private void tbRegistroNotasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRegistroNotasMousePressed
         btnModificar.setEnabled(true);
         btnEliminar.setEnabled(true);
         btnGuardar.setEnabled(false);
-    }//GEN-LAST:event_TbMaestrosMousePressed
+    }//GEN-LAST:event_tbRegistroNotasMousePressed
 
     private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
         soloLetras(evt);
     }//GEN-LAST:event_txtNombresKeyTyped
 
-    private void txtIIparcialKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIIparcialKeyTyped
-        soloNumeros(evt);      
-    }//GEN-LAST:event_txtIIparcialKeyTyped
+    private void txtSegundoParcialKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSegundoParcialKeyTyped
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtSegundoParcialKeyTyped
 
     private void txtAcumuladoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcumuladoKeyTyped
-        soloNumeros(evt);        // TODO add your handling code here:
+        soloNumeros(evt);
     }//GEN-LAST:event_txtAcumuladoKeyTyped
 
-    private void txtIparcialKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIparcialKeyTyped
+    private void txtPrimerParcialKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrimerParcialKeyTyped
         soloNumeros(evt);
-    }//GEN-LAST:event_txtIparcialKeyTyped
+    }//GEN-LAST:event_txtPrimerParcialKeyTyped
 
     private void txtAsignaturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAsignaturaKeyTyped
 
@@ -617,22 +616,19 @@ public final class FrmMaestros extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel BackGround;
-    private javax.swing.JLabel BtnControldeNotas;
-    private javax.swing.JButton BtnGuardarCambios;
-    private javax.swing.JButton BtnSalir;
-    private javax.swing.JButton BtnSeleccionar;
-    private javax.swing.JButton BtnVolver;
-    private javax.swing.JComboBox<String> CbxModificar;
-    private javax.swing.JLabel Logo1;
-    private javax.swing.JPanel PnlControlNotas;
     private javax.swing.JPanel PnlModificar;
-    private javax.swing.JTable TbMaestros;
+    private javax.swing.JPanel background;
+    private javax.swing.JLabel btnControldeNotas;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardarCambios;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnSeleccionar;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cbxOpcionesModificar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -644,92 +640,123 @@ public final class FrmMaestros extends javax.swing.JFrame {
     private javax.swing.JLabel lblAsignatura;
     private javax.swing.JLabel lblCarnet;
     private javax.swing.JLabel lblElegir;
-    private javax.swing.JLabel lblIIparcial;
-    private javax.swing.JLabel lblIparcial;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblModificar;
     private javax.swing.JLabel lblNombres;
+    private javax.swing.JLabel lblPrimerParcial;
+    private javax.swing.JLabel lblSegundoParcial;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lbltituloTabla;
+    private javax.swing.JLabel lblTituloBienvenida;
+    private javax.swing.JLabel lblTituloTabla;
     private javax.swing.JPanel pnlBienvenida;
-    private javax.swing.JLabel tituloBienvenida1;
+    private javax.swing.JPanel pnlControlNotas;
+    private javax.swing.JTable tbRegistroNotas;
     private javax.swing.JTextField txtAcumulado;
     private javax.swing.JTextField txtAsignatura;
     private javax.swing.JTextField txtCarnet;
-    private javax.swing.JTextField txtIIparcial;
-    private javax.swing.JTextField txtIparcial;
     private javax.swing.JTextField txtNombres;
+    private javax.swing.JTextField txtPrimerParcial;
+    private javax.swing.JTextField txtSegundoParcial;
     // End of variables declaration//GEN-END:variables
+    /*Codigo animaciones*/
+
+    public void animacionesBtnControlDeNotas() {
+        if (pnlControlNotas.getY() == 600 && btnControldeNotas.getY() == 380 && pnlBienvenida.getY() == 10) {
+            animar.JPanelYArriba(10, -380, 10, 10, pnlBienvenida);
+            animar.JLabelYAbajo(380, 600, 10, 10, btnControldeNotas);
+            animar.JPanelYArriba(600, 10, 10, 10, pnlControlNotas);
+        }
+    }
+
+    public void animacionesBtnRegresar() {
+        if (pnlControlNotas.getY() == 10 && btnControldeNotas.getY() == 600 && pnlBienvenida.getY() == -380) {
+            animar.JPanelYArriba(-380, 10, 10, 10, pnlBienvenida);
+            animar.JLabelYAbajo(600, 380, 10, 10, btnControldeNotas);
+            animar.JPanelYArriba(10, 600, 10, 10, pnlControlNotas);
+            limpiarCampos();
+        }
+    }
+
+    //codigo encargado de la personalizacion del JTable
+    public void configTable(DefaultTableModel modeloTabla) {
+        tbRegistroNotas.setModel(modeloTabla);
+        tbRegistroNotas.getTableHeader().setFont(TIMES_NEW_ROMAN);
+        tbRegistroNotas.getTableHeader().setOpaque(false);
+        tbRegistroNotas.getTableHeader().setBackground(VERDE_OSCURO);
+        tbRegistroNotas.getTableHeader().setForeground(BLANCO);
+        tbRegistroNotas.setRowHeight(ALTURA_FILAS);
+        tbRegistroNotas.getColumnModel().getColumn(0).setPreferredWidth(ANCHO_COLUMNAS);
+    }
+
+    //metodo campos vacios
+    public boolean camposVacios() {
+        return txtNombres.getText().isEmpty() || txtCarnet.getText().isEmpty()
+                || txtAcumulado.getText().isEmpty() || txtPrimerParcial.getText().isEmpty()
+                || txtSegundoParcial.getText().isEmpty() || txtAsignatura.getText().isEmpty();
+    }
 
     //Este metodo muestra los datos en los Jtextfields y comboBoxs cuando se hace click en una fila de la tabla
-    public void Mostrar() {
-        TbMaestros.addMouseListener(new MouseAdapter() {
+    public void mostrarInfoEnCampos() {
+        tbRegistroNotas.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent Mouse_Event) {
                 JTable tabla = (JTable) Mouse_Event.getSource();
-                Point point = Mouse_Event.getPoint();
-                int Fila = tabla.rowAtPoint(point);
+                Point coordenadas = Mouse_Event.getPoint();
+                int fila = tabla.rowAtPoint(coordenadas);
                 if (Mouse_Event.getClickCount() == 1) {
-                    txtNombres.setText(TbMaestros.getValueAt(TbMaestros.getSelectedRow(), 0).toString());
-                    txtCarnet.setText(TbMaestros.getValueAt(TbMaestros.getSelectedRow(), 1).toString());
-                    txtAsignatura.setText(TbMaestros.getValueAt(TbMaestros.getSelectedRow(), 2).toString());
-                    txtIparcial.setText(TbMaestros.getValueAt(TbMaestros.getSelectedRow(), 3).toString());
-                    txtIIparcial.setText(TbMaestros.getValueAt(TbMaestros.getSelectedRow(), 4).toString());
-                    txtAcumulado.setText(TbMaestros.getValueAt(TbMaestros.getSelectedRow(), 5).toString());
+                    txtNombres.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 0).toString());
+                    txtCarnet.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 1).toString());
+                    txtAsignatura.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 2).toString());
+                    txtPrimerParcial.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 3).toString());
+                    txtSegundoParcial.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 4).toString());
+                    txtAcumulado.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 5).toString());
 
                     desactivarCampos();
                 }
-
             }
         });
     }
 
     // Metodos que configuran la tabla par que muestre los datos correctamente
-    public void LlenarTabla() {
+    public void llenarTabla() {
         try {
-            BufferedReader leer = new BufferedReader(new FileReader(Notas));
-            Object[] tableLines = leer.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString();
-                String[] dataRow = line.split(",");
-                MaestrosT.addRow(dataRow);
+            BufferedReader leer = new BufferedReader(new FileReader(notas));
+            Object[] filasTabla = leer.lines().toArray();
+            for (int i = 0; i < filasTabla.length; i++) {
+                String filaCompleta = filasTabla[i].toString();
+                String[] filaElementosSeparados = filaCompleta.split(",");
+                modeloTabla.addRow(filaElementosSeparados);
             }
         } catch (IOException e) {
-
+            JOptionPane.showMessageDialog(null, "Error al llenar la tabla: " + e);
         }
     }
 
-    public void LimpiarTabla() {
-        DefaultTableModel tb = (DefaultTableModel) TbMaestros.getModel();
-        int a = TbMaestros.getRowCount() - 1;
-        for (int i = a; i >= 0; i--) {
-            tb.removeRow(tb.getRowCount() - 1);
+    public void limpiarTabla() {
+        DefaultTableModel tabla = (DefaultTableModel) tbRegistroNotas.getModel();
+        int numeroFilas = tbRegistroNotas.getRowCount() - 1;
+        for (int i = numeroFilas; i >= 0; i--) {
+            tabla.removeRow(tabla.getRowCount() - 1);
         }
     }
 
     //Este metodo se encarga de guardar los datos en el txt
-    public void Guardar() {
-        if (txtNombres.getText().isEmpty()
-                || txtCarnet.getText().isEmpty()
-                || txtAcumulado.getText().isEmpty()
-                || txtIparcial.getText().isEmpty()
-                || txtIIparcial.getText().isEmpty()||txtAsignatura.getText().isEmpty()) {
+    public void guardarEnFichero() {
+        if (camposVacios()) {
             JOptionPane.showMessageDialog(null, "Rellene todos los Campos");
         } else {
-            double NF = Double.parseDouble(txtIparcial.getText()) + Double.parseDouble(txtIIparcial.getText())
-                    + Double.parseDouble(txtAcumulado.getText());
+            dividirRegistroEnVariables(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado);
+            calculoNotaFinal(notaPrimerParcial, notaSegundoParcial, notaAcumulado);
+            registro = registroString(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado, notaFinal);
 
-            String introducirNotas = txtNombres.getText() + "," + txtCarnet.getText() + "," + txtAsignatura.getText() + "," + Double.valueOf(txtIparcial.getText())
-                    + "," + Double.valueOf(txtIIparcial.getText()) + "," + Double.valueOf(txtAcumulado.getText()) + "," + NF;
-
-            try {
-                FileWriter escribir = new FileWriter(Notas, true);
-                escribir.write(introducirNotas);
+            try (FileWriter escribir = new FileWriter(notas, true)) {
+                escribir.write(registro);
                 escribir.write(System.getProperty("line.separator"));
                 JOptionPane.showMessageDialog(this, "Guardado Correctamente");
-                escribir.close();
-                LimpiarCampos();
-                LimpiarTabla();
-                LlenarTabla();
+
+                limpiarTabla();
+                llenarTabla();
+                limpiarCampos();
                 desactivarCampos();
             } catch (IOException e) {
             }
@@ -737,11 +764,11 @@ public final class FrmMaestros extends javax.swing.JFrame {
     }
 
     //Este metodo se encarga de limpiar campos
-    public void LimpiarCampos() {
+    public void limpiarCampos() {
         txtNombres.setText("");
         txtCarnet.setText("");
-        txtIparcial.setText("");
-        txtIIparcial.setText("");
+        txtPrimerParcial.setText("");
+        txtSegundoParcial.setText("");
         txtAcumulado.setText("");
         txtAsignatura.setText("");
     }
@@ -750,8 +777,8 @@ public final class FrmMaestros extends javax.swing.JFrame {
     public void desactivarCampos() {
         txtNombres.setEditable(false);
         txtCarnet.setEditable(false);
-        txtIparcial.setEditable(false);
-        txtIIparcial.setEditable(false);
+        txtPrimerParcial.setEditable(false);
+        txtSegundoParcial.setEditable(false);
         txtAcumulado.setEditable(false);
         txtAsignatura.setEditable(false);
     }
@@ -760,15 +787,16 @@ public final class FrmMaestros extends javax.swing.JFrame {
     public void activarCampos() {
         txtNombres.setEditable(true);
         txtCarnet.setEditable(true);
-        txtIparcial.setEditable(true);
-        txtIIparcial.setEditable(true);
+        txtPrimerParcial.setEditable(true);
+        txtSegundoParcial.setEditable(true);
         txtAcumulado.setEditable(true);
         txtAsignatura.setEditable(true);
     }
     //Este metodo vincula el CbxModificar con los campos ingresados
 
     public void SeleccionCbxModificar() {
-        switch (CbxModificar.getSelectedIndex()) {
+        switch (cbxOpcionesModificar.getSelectedIndex()) {
+
             case 0 -> {
                 desactivarCampos();
                 txtNombres.setEditable(true);
@@ -786,13 +814,13 @@ public final class FrmMaestros extends javax.swing.JFrame {
             }
             case 3 -> {
                 desactivarCampos();
-                txtIparcial.setEditable(true);
-                txtIparcial.requestFocus();
+                txtPrimerParcial.setEditable(true);
+                txtPrimerParcial.requestFocus();
             }
             case 4 -> {
                 desactivarCampos();
-                txtIIparcial.setEditable(true);
-                txtIIparcial.requestFocus();
+                txtSegundoParcial.setEditable(true);
+                txtSegundoParcial.requestFocus();
             }
             case 5 -> {
                 desactivarCampos();
@@ -800,80 +828,79 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 txtAcumulado.requestFocus();
             }
         }
-        double NF = Double.parseDouble(txtIparcial.getText()) + Double.parseDouble(txtIIparcial.getText())
-                + Double.parseDouble(txtAcumulado.getText());
-
-        aNota = txtNombres.getText() + "," + txtCarnet.getText() + "," + txtAsignatura.getText() + "," + Double.valueOf(txtIparcial.getText())
-                + "," + Double.valueOf(txtIIparcial.getText()) + "," + Double.valueOf(txtAcumulado.getText()) + "," + NF;
+        dividirRegistroEnVariables(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado);
+        calculoNotaFinal(notaPrimerParcial, notaSegundoParcial, notaAcumulado);
+        registroString(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado, notaFinal);
+        registroNormal = registro;
     }
 
     //Este metodo se encarga de Modificar valores dentro del archivo txt
-    public void Modificar() {
-        double NF = Double.parseDouble(txtIparcial.getText()) + Double.parseDouble(txtIIparcial.getText())
-                + Double.parseDouble(txtAcumulado.getText());
+    public void modificarFichero(String linea, String nombreFichero) {
+        dividirRegistroEnVariables(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado);
+        calculoNotaFinal(notaPrimerParcial, notaSegundoParcial, notaAcumulado);
+        registroString(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado, notaFinal);
+        registroModificado = registro;
 
-        nNota = txtNombres.getText() + "," + txtCarnet.getText() + "," + txtAsignatura.getText() + "," + Double.valueOf(txtIparcial.getText())
-                + "," + Double.valueOf(txtIIparcial.getText()) + "," + Double.valueOf(txtAcumulado.getText()) + "," + NF;
-        String nFnuevo = "Modificar2.txt";
-        File fNuevo = new File(nFnuevo);
-        String Linea;
+        String nombreTemporalFichero = "Modificar2.txt";
+        File ficheroNuevo = new File(nombreTemporalFichero);
+
         try {
 
-            FileReader fr = new FileReader(Notas);
-            BufferedReader br = new BufferedReader(fr);
-            FileWriter fw = new FileWriter(fNuevo);
-            while ((Linea = br.readLine()) != null) {
-                String escribir = Linea;
-                if (Linea.equals(aNota)) {
+            BufferedReader leer;
+            FileWriter sobreEscribirDatos;
+            try (FileReader archivo = new FileReader(notas)) {
+                leer = new BufferedReader(archivo);
+                sobreEscribirDatos = new FileWriter(ficheroNuevo);
+                while ((linea = leer.readLine()) != null) {
+                    String escribir = linea;
+                    if (linea.equals(registroNormal)) {
 
-                    fw.write(nNota);
-                    fw.write(System.getProperty("line.separator"));
-                } else if (Linea.equalsIgnoreCase(escribir)) {
-                    System.out.println(escribir);
-                    fw.write(escribir);
-                    fw.write(System.getProperty("line.separator"));
+                        sobreEscribirDatos.write(registroModificado);
+                        sobreEscribirDatos.write(System.getProperty("line.separator"));
+                    } else if (linea.equalsIgnoreCase(escribir)) {
+                        System.out.println(escribir);
+                        sobreEscribirDatos.write(escribir);
+                        sobreEscribirDatos.write(System.getProperty("line.separator"));
+                    }
 
                 }
-
             }
-            fw.close();
-            br.close();
-            fr.close();
-            String nAntiguo = Notas.getName();
-
-            Notas.delete();
-            fNuevo.renameTo(Notas);
+            leer.close();
+            sobreEscribirDatos.close();
+            nombreFichero = notas.getName();
+            notas.delete();
+            ficheroNuevo.renameTo(notas);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
             System.out.println(ex);
         }
-        LimpiarTabla();
-        LlenarTabla();
+        limpiarTabla();
+        llenarTabla();
     }
 
     //Este metodo pasa los datos del archivo de texto a objetos para poder manipular con ellos
-    public void LeerDetextoAObjeto() {
-        String Linea, Nombres, Carnet, Asignatura;
-        double Iparcial, IIparcial, Acumulado, NotaFinal;
-        try {
-            FileReader fr = new FileReader(Notas);
-            BufferedReader br = new BufferedReader(fr);
-            while ((Linea = br.readLine()) != null) {
-                StringTokenizer st = new StringTokenizer(Linea, ",");
-                Nombres = st.nextToken();
-                Carnet = st.nextToken();
-                Asignatura = st.nextToken();
-                Iparcial = Double.parseDouble(st.nextToken());
-                IIparcial = Double.parseDouble(st.nextToken());
-                Acumulado = Double.parseDouble(st.nextToken());
-                NotaFinal = Double.parseDouble(st.nextToken());
-                //lo añado al vector para poder manipular con el 
-                D = new Datos(Nombres, Carnet, Asignatura, Iparcial, IIparcial, Acumulado, NotaFinal);
+    public void leerDeTextoAObjeto(String linea) {
 
-                DatosT.add(D);
+        try {
+            BufferedReader leer;
+            try (FileReader archivo = new FileReader(notas)) {
+                leer = new BufferedReader(archivo);
+                while ((linea = leer.readLine()) != null) {
+                    StringTokenizer st = new StringTokenizer(linea, ",");
+                    String nombresTemp = st.nextToken();
+                    String carnetTemp = st.nextToken();
+                    String asignaturaTemp = st.nextToken();
+                    double primerParcialTemp = Double.parseDouble(st.nextToken());
+                    double segundoParcialTemp = Double.parseDouble(st.nextToken());
+                    double acumuladoTemp = Double.parseDouble(st.nextToken());
+                    double notaFinalTemp = Double.parseDouble(st.nextToken());
+                    //lo añado al vector para poder manipular con el
+                    datosAcademicos = new Datos(nombresTemp, carnetTemp, asignaturaTemp, primerParcialTemp, segundoParcialTemp, acumuladoTemp, notaFinalTemp);
+
+                    datosTabla.add(datosAcademicos);
+                }
             }
-            fr.close();
-            br.close();
+            leer.close();
         } catch (IOException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
             System.out.println(ex);
@@ -881,44 +908,45 @@ public final class FrmMaestros extends javax.swing.JFrame {
     }
 
     //Este metodo elimina el registro seleccionado en la tabla
-    public void Eliminar() {
+    public void eliminar() {
         try {
-            if (DatosT.isEmpty()) {
+            if (datosTabla.isEmpty()) {
 
-                LeerDetextoAObjeto();
+                leerDeTextoAObjeto("");
             }
 
-            try ( FileWriter fw = new FileWriter(Notas);  BufferedWriter bw = new BufferedWriter(fw)) {
-                String Nombre = txtNombres.getText();
-                String Carnet = txtCarnet.getText();
-                String Asignatura = txtAsignatura.getText();
-                double Iparcial = Double.parseDouble(txtIparcial.getText());
-                double IIparcial = Double.parseDouble(txtIIparcial.getText());
-                double Acumulado = Double.parseDouble(txtAcumulado.getText());
-                for (Datos n : DatosT) {
-                    if (!n.getNombres().equals(Nombre)
-                            || !n.getCarnet().equals(Carnet)
-                            || !n.getAsignatura().equals(Asignatura)
-                            ||n.getIpacial()!=Iparcial
-                            ||n.getIIparcial()!=IIparcial
-                            ||n.getAcumulado()!=Acumulado
-                        ) {
-                        bw.write(n.Nombres + "," + n.Carnet + "," + n.Asignatura + "," + n.Ipacial + "," + n.IIparcial + "," + n.Acumulado + ", " + n.NF + "\r\n");
+            try (FileWriter archivo = new FileWriter(notas); BufferedWriter escribir = new BufferedWriter(archivo)) {
+                String nombre = txtNombres.getText();
+                String carnet = txtCarnet.getText();
+                String asignaturas = txtAsignatura.getText();
+                double primerParcial = Double.parseDouble(txtPrimerParcial.getText());
+                double segundoParcial = Double.parseDouble(txtSegundoParcial.getText());
+                double acumulado = Double.parseDouble(txtAcumulado.getText());
+                for (Datos n : datosTabla) {
+                    if (!n.getNombres().equals(nombre)
+                            || !n.getCarnet().equals(carnet)
+                            || !n.getAsignatura().equals(asignaturas)
+                            || n.getPrimerPacial() != primerParcial
+                            || n.getSegundoParcial() != segundoParcial
+                            || n.getAcumulado() != acumulado) {
+
+                        escribir.write(n.getNombres() + "," + n.getCarnet() + "," + n.getAsignatura() + "," + n.getPrimerPacial()
+                                + "," + n.getSegundoParcial() + "," + n.getAcumulado() + ", " + n.getNotaFinal() + "\r\n");
                     } else {
                         JOptionPane.showMessageDialog(null, "Registro Eliminado");
                     }
                 }
             }
-            DatosT.clear();
-            LimpiarTabla();
-            LlenarTabla();
-            LimpiarCampos();
+            datosTabla.clear();
+            limpiarTabla();
+            llenarTabla();
+            limpiarCampos();
         } catch (HeadlessException | IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-        public void soloLetras(java.awt.event.KeyEvent evt) {
+
+    public void soloLetras(java.awt.event.KeyEvent evt) {
         int key = evt.getKeyChar();
         boolean mayusculas = key >= 65 && key <= 90;
         boolean minusculas = key >= 97 && key <= 122;
@@ -927,12 +955,30 @@ public final class FrmMaestros extends javax.swing.JFrame {
             evt.consume();
         }
     }
-                public void soloNumeros(java.awt.event.KeyEvent evt) {
+
+    public void soloNumeros(java.awt.event.KeyEvent evt) {
         int key = evt.getKeyChar();
         boolean num = key >= 48 && key <= 57;
         boolean punto = key == 46;
         if (!(num || punto)) {
             evt.consume();
         }
+    }
+
+    public void calculoNotaFinal(double notaPrimerParcial, double notaSegundoParcial, double acumulado) {
+        notaFinal = notaPrimerParcial + notaSegundoParcial + acumulado;
+    }
+
+    public void dividirRegistroEnVariables(String nombre, String carnet, String asignatura, double notaPrimerParcial, double notaSegundoParcial, double acumulado) {
+        nombre = String.valueOf(txtNombres.getText());
+        carnet = String.valueOf(txtCarnet.getText());
+        asignatura = String.valueOf(txtAsignatura.getText());
+        notaPrimerParcial = Double.parseDouble(txtPrimerParcial.getText());
+        notaSegundoParcial = Double.parseDouble(txtSegundoParcial.getText());
+        acumulado = Double.parseDouble(txtAcumulado.getText());
+    }
+
+    public String registroString(String nombre, String carnet, String asignatura, double notaPrimerParcial, double notaSegundoParcial, double acumulado, double notaFinal) {
+        return nombre + "," + carnet + "," + asignatura + "," + notaPrimerParcial + "," + notaSegundoParcial + "," + acumulado + "," + notaFinal + ",";
     }
 }

@@ -1,8 +1,10 @@
 package Ventanas;
 
-import java.awt.Color;
-import javax.swing.border.EtchedBorder;
 import Animaciones.Animaciones;
+import Ventanas.ConfigAnimaciones.AnimacionInicial;
+import Ventanas.ConfigAnimaciones.AnimacionBotonIniciarS;
+import Ventanas.Configuraciones.Seguridad;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.border.EtchedBorder;
 
 public final class Inicio extends javax.swing.JFrame {
 
@@ -33,6 +36,8 @@ public final class Inicio extends javax.swing.JFrame {
 
     //Objeto de la clase animacion
     Animaciones animar = new Animaciones();
+    AnimacionInicial animarInicio = new AnimacionInicial();
+    AnimacionBotonIniciarS animacionBtnInicioS = new AnimacionBotonIniciarS();
 //variables estaticas encargadas de la verificacion del login
     private static int intentos;
     private static String usuario, contra;
@@ -42,6 +47,7 @@ public final class Inicio extends javax.swing.JFrame {
         icono();
     }
 //reiniciar intentos una vez ingreses a las ventanas
+
     public void setIntentos(int Intentos) {
         Inicio.intentos = Intentos;
     }
@@ -473,7 +479,7 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAcercaDeNosotrosMouseExited
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        animacionesAbrirVentana();
+        animarInicio.abrirVentana(pnlDescripcionPrograma, logoGrande);
     }//GEN-LAST:event_formWindowOpened
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
@@ -481,7 +487,11 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnIniciarSesionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMousePressed
-        animacionesBtnIniciarSesion();
+
+        animacionBtnInicioS.quitarPantallaInicio(pnlDescripcionPrograma, logoGrande, pnlLogin,
+                btnVolverAInicio, btnIniciarSesion);
+        animacionBtnInicioS.quitarPantallaAcercaDeNosotros(pnlRedesDesarrollador, pnlAcercaDeNosotros, pnlLogin,
+                btnVolverAInicio, btnIniciarSesion);
     }//GEN-LAST:event_btnIniciarSesionMousePressed
 
     private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
@@ -648,11 +658,6 @@ public final class Inicio extends javax.swing.JFrame {
            * nota: Los if son para evitar que se presione el boton mientras se ejecuta otra animacion, 
            * esto para evitar bugs
      */
-    public void animacionesAbrirVentana() {
-        animar.JLabelXDerecha(-270, 110, 15, 10, logoGrande);
-        animar.JPanelXIzquierda(1100, 400, 8, 10, pnlDescripcionPrograma);
-    }
-
     public void animacionesAcercaDeNosotros() {
         if (logoGrande.getX() == 110 && pnlDescripcionPrograma.getX() == 400) {
             animar.JLabelXIzquierda(110, -270, 15, 10, logoGrande);
@@ -668,25 +673,6 @@ public final class Inicio extends javax.swing.JFrame {
             animar.JPanelYArriba(600, 150, 10, 10, pnlRedesDesarrollador);
             animar.JLabelYAbajo(-50, 10, 10, 10, btnVolverAInicio);
             animar.JLabelYAbajo(-50, 10, 10, 10, btnIniciarSesion);
-        }
-    }
-
-    public void animacionesBtnIniciarSesion() {
-
-        if (logoGrande.getX() == 110 && pnlDescripcionPrograma.getX() == 400) {
-            animar.JLabelXIzquierda(110, -270, 15, 10, logoGrande);
-            animar.JPanelXDerecha(400, 1100, 8, 10, pnlDescripcionPrograma);
-            animar.JPanelYArriba(600, 150, 10, 10, pnlLogin);
-            animar.JLabelYAbajo(-50, 10, 10, 10, btnVolverAInicio);
-            animar.JLabelYArriba(10, -50, 10, 10, btnIniciarSesion);
-        }
-
-        if (pnlRedesDesarrollador.getY() == 150 && pnlAcercaDeNosotros.getY() == 600) {
-            animar.JPanelYAbajo(150, 600, 10, 10, pnlRedesDesarrollador);
-            animar.JPanelYArriba(600, 500, 10, 1, pnlAcercaDeNosotros);
-            animar.JPanelYArriba(600, 150, 10, 10, pnlLogin);
-            animar.JLabelYAbajo(-50, 10, 10, 10, btnVolverAInicio);
-            animar.JLabelYArriba(10, -50, 10, 10, btnIniciarSesion);
         }
     }
 
@@ -753,6 +739,7 @@ public final class Inicio extends javax.swing.JFrame {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+// codigo que se encarga de la autenticacion de usuario y contra
 
     public void validarContra(int longitudArray, int indice, String[] usuarios, String linea, String identificador, File fichero) {
         try {
@@ -772,7 +759,7 @@ public final class Inicio extends javax.swing.JFrame {
             contra = txtContra.getText();
 
             Seguridad verificacion = new Seguridad();
-            verificacion.ValidarUsuario(usuarios, usuario, contra, intentos, identificador);
+            verificacion.validarUsuario(usuarios, usuario, contra, intentos, identificador);
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error en la base de datos " + ex.getMessage());
         } catch (IOException ex) {

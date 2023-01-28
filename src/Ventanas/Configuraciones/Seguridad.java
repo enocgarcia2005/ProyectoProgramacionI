@@ -1,46 +1,50 @@
-package Ventanas;
+package Ventanas.Configuraciones;
 
+import Ventanas.Inicio;
 import javax.swing.JOptionPane;
-
+/**Esta clase se encarga de verificar si los usuarios y contraseñas son correctos
+ * para que de esta manera la siguiente ventana solo se abra al ingresar los datos 
+ * correctamente.
+ * 
+ * Si los datos no coinciden se suma un intento erroneo, al acumular 5 de estos el programa se detendra.
+ * 
+ * Este codigo fue creado por:
+ * @author enocgarcia
+ * @since 20/10/2022
+ */
 public class Seguridad {
-    
-    Inicio inicio = new Inicio();
-    
-    public void ValidarUsuario(String Usuarios[], String Usuario, String Contra, int Intentos, String Identificador) {
+/** Objeto de la ventana inicio que sirve para  actualizar los intentos erroneos.*/
+Inicio inicio = new Inicio();
+/**
+ * El metodo funciona con 5 parametros:
+ * @param usuarios -Arreglo de usuarios almacenados en la base de datos.
+ * @param nombreUsuario -almacena el nombre de usuario ingresado en el programa.
+ * @param contra -almacena la contraseña ingresada en el programa.
+ * @param intentos - sirve como contador de intentos erroneos.
+ * @param identificador -identifica el tipo de usuario que se esta ingresando.
+ * 
+ *En un ciclo for se recorren todos los usuarios y mediante una variable interna (encontrado) de tipo boolean
+ * se logra determinar si coinciden o no los datos,esta variable inicialmente igualada a false, si el usuario y contra
+ * coinciden esta se iguala a true, si no permanece igual, una vez recorrido el for si la variable encontrado es verdadera
+ * se abre la ventana correspondiente al tipo de usuario, si no lansa un mensaje que notifica que los datos son erroneos,
+ * y se suma un intento erroneo.
+ */
+    public void validarUsuario(String usuarios[], String nombreUsuario, String contra, int intentos, String identificador) {
         boolean encontrado = false;
-        
-        for (int i = 0; i < Usuarios.length; i++) {
-            if (Usuarios[i].equalsIgnoreCase(Usuario) && Usuarios[i + 1].equals(Contra)) {
-                String res = Usuario;
+        for (int i = 0; i < usuarios.length; i++) {
+            if (usuarios[i].equalsIgnoreCase(nombreUsuario) && usuarios[i + 1].equals(contra)) {
                 encontrado = true;
-                Intentos = 0;
-                inicio.setIntentos(Intentos);
-                if (encontrado == true) {
-                    if ("Alumnos".equals(Identificador)) {
-                        FrmAlumnos abrir = new FrmAlumnos();
-                        abrir.setVisible(true);
-                        abrir.setUser(res);
-                        abrir.setLocationRelativeTo(null);
-                        
-                    }
-                    
-                    if ("Maestros".equals(Identificador)) {
-                        FrmMaestros abrir = new FrmMaestros();
-                        abrir.setVisible(true);
-                        FrmMaestros.setUser(res);
-                        abrir.setLocationRelativeTo(null);
-                    }
-                }
-                break;
+                intentos = 0;
+                inicio.setIntentos(intentos);
             }
-            
         }
-        
-        if (encontrado == false) {
-            JOptionPane.showMessageDialog(null, "Usuario y/o  contraseña incorrectos  \nIntentos erroneos:" + Intentos);
-            
+        if (encontrado == true) {
+            UsuariosFactory elecccionVentana = new UsuariosFactory(identificador);
+            elecccionVentana.abrirVentana();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario y/o  contraseña incorrectos  \nIntentos erroneos:" + intentos);
         }
-        if (Intentos > 5) {
+        if (intentos > 5) {
             System.exit(0);
         }
     }
