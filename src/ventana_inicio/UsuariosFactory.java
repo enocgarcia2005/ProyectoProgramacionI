@@ -18,7 +18,8 @@ import javax.swing.JFrame;
 public class UsuariosFactory {
 
     /**
-     * Objeto necesario para la aplicacion de este patron de diseño.
+     * El objeto "ventana" se crea para poder implementar de manera correcta el
+     * patron ya mencionado
      */
     JFrame ventana;
 

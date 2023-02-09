@@ -1,55 +1,93 @@
 package ventana_inicio;
 
-import animaciones.JLabelAnimaciones;
-import animaciones.JPanelAnimaciones;
 import java.awt.Color;
-import java.awt.Desktop;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.border.EtchedBorder;
 
+/**
+ * Esta clase contiene las todas las implementaciones del frame inicio, tales
+ * como animaciones, acciones, autenticacion de usuario, efectos de botones,
+ * etc.
+ *
+ * nota: anteriormente esta clase poseia todo el contenido dentro de ella pero
+ * haciendo uso de la refactorizacion, se hizo mas pequeña y legible.
+ *
+ * @author enocgarcia
+ * @since 09/02/2023
+ */
 public final class Inicio extends javax.swing.JFrame {
 
-    //Valores constantes
-    /*  Colores     */
-    private final Color GRIS = new Color(153, 153, 153);
-    private final Color NEGRO = new Color(0, 0, 0);
+    /**
+     * El objeto "VERDE_CLARO" como su nombre lo indica contiene el color ya
+     * mencionado en numero RGB haciendo uso de la clase Color de Java vanila.
+     */
     private final Color VERDE_CLARO = new Color(51, 180, 0);
+    /**
+     * El objeto "VERDE_OSCURO" como su nombre lo indica contiene el color ya
+     * mencionado en numero RGB haciendo uso de la clase Color de Java vanila.
+     */
     private final Color VERDE_OSCURO = new Color(51, 153, 0);
-    /*Urls  */
+    /**
+     * La variable "FACEBOOK" de tipo cadena contiene el link al perfil de
+     * facebook del desarrollador del proyecto.
+     */
     private final String FACEBOOK = "https://www.facebook.com/enoc.garcia.395/";
+    /**
+     * La variable "INSTAGRAM" de tipo cadena contiene el link al perfil de
+     * instagram del desarrollador del proyecto.
+     */
     private final String INSTAGRAM = "https://www.instagram.com/enocnehemias_/";
+    /**
+     * La variable "TIKTOK" de tipo cadena contiene el link al perfil de tik tok
+     * del desarrollador del proyecto.
+     */
     private final String TIKTOK = "https://www.tiktok.com/@enocnehemias7?is_from_webapp=1&sender_device=pc";
-
-    //Objeto de la clase animacion
-    JLabelAnimaciones animarEtiqueta = JLabelAnimaciones.getInstance();
-    JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
+    /**
+     * El objeto "animarInicio" se crea con el fin de implementar las
+     * animaciones que el programa debe realizar al iniciarse.
+     */
     InicioAnimacion animarInicio = new InicioAnimacion();
+    /**
+     * El objeto "animacionBtnInicioS" se crea con el fin de implementar las
+     * animaciones que se deben realizar al dar click en el boton iniciar
+     * sesion.
+     */
     BtnIniciarSesionAnimacion animacionBtnInicioS = new BtnIniciarSesionAnimacion();
+    /**
+     * El objeto "animarInfoAutor" se crea con el fin de implemetar las
+     * animaciones correspondientes al hacer click en el boton Acerca de
+     * nosotros.
+     */
     AcercaDeNosotrosAnimacion animarInfoAutor = new AcercaDeNosotrosAnimacion();
-//variables estaticas encargadas de la verificacion del login
-    private static int intentos;
-    private static String usuario, contra;
+    /**
+     * El objeto "animarVolver" se crea con el fin de implementar las
+     * animaciones correponidentes al presionar el boton volver a inicio.
+     */
+    VolverAInicioAnimacion animarVolver = new VolverAInicioAnimacion();
+    /**
+     * El objeto "configurar" se crea con el fin de implementar ajustes
+     * generales del Frame, tales como colorear etiquetas para que parezcan
+     * botones, crear el efecto de place holder en el login y mostrar un mensaje
+     * al querer salir del programa.
+     */
+    ConfiguracionesGenerales configurar = new ConfiguracionesGenerales();
+    /**
+     * El objeto " validar " se crea con el fin de implementar la configuracion
+     * necesaria para que el login haga la validacion de usuario correctamente.
+     */
+    LoginValidacion validar = new LoginValidacion();
+    /**
+     * El objeto "alumnoDatos" contiene un fichero de texto con los usuarios de
+     * tipo alumno.
+     */
+    File alumnosDatos = new File("Alumnos.txt");
+    /**
+     * El objeto "maestrosDatos" contiene un fichero de texto con los usuarios
+     * de tipo maestros.
+     */
+    File maestrosDatos = new File("Maestros.txt");
 
     public Inicio() {
         initComponents();
-        icono();
-    }
-//reiniciar intentos una vez ingreses a las ventanas
-
-    public void setIntentos(int Intentos) {
-        Inicio.intentos = Intentos;
     }
 
     @SuppressWarnings("unchecked")
@@ -122,11 +160,6 @@ public final class Inicio extends javax.swing.JFrame {
 
         pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
         pnlHeader.setForeground(new java.awt.Color(153, 153, 153));
-        pnlHeader.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlHeaderMouseClicked(evt);
-            }
-        });
         pnlHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         logoPeque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
@@ -289,11 +322,6 @@ public final class Inicio extends javax.swing.JFrame {
                 txtUsuarioMousePressed(evt);
             }
         });
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
-            }
-        });
         pnlLogin.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 160, -1));
 
         separadorContra.setBackground(new java.awt.Color(51, 153, 0));
@@ -321,9 +349,6 @@ public final class Inicio extends javax.swing.JFrame {
         btnLogin.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 153, 0), null));
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnLoginMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnLoginMouseEntered(evt);
             }
@@ -354,11 +379,6 @@ public final class Inicio extends javax.swing.JFrame {
         alumno.setForeground(new java.awt.Color(51, 153, 0));
         alumno.setSelected(true);
         alumno.setText("Alumno");
-        alumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                alumnoActionPerformed(evt);
-            }
-        });
         pnlLogin.add(alumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, -1));
 
         agruparbotones.add(maestro);
@@ -370,11 +390,6 @@ public final class Inicio extends javax.swing.JFrame {
         background.add(pnlLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, 440, 270));
 
         pnlAcercaDeNosotros.setBackground(new java.awt.Color(255, 255, 255));
-        pnlAcercaDeNosotros.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pnlAcercaDeNosotrosMousePressed(evt);
-            }
-        });
         pnlAcercaDeNosotros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         pnlAcercaDeNosotros.add(separadorAcercaDeNosotros, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 140, 10));
 
@@ -455,19 +470,15 @@ public final class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMouseEntered
-        iniciarSesionVerdeBajo(VERDE_CLARO);
+        configurar.colorearEtiqueta(VERDE_CLARO, btnIniciarSesion);
     }//GEN-LAST:event_btnIniciarSesionMouseEntered
 
     private void btnIniciarSesionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMouseExited
-        iniciarSesionVerdeOscuro(VERDE_OSCURO);
+        configurar.colorearEtiqueta(VERDE_OSCURO, btnIniciarSesion);
     }//GEN-LAST:event_btnIniciarSesionMouseExited
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        //   este codigo evita cerrar el programa por error, es decir presionar el boton sin querer hacerlo
-        int salir = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres salir?");
-        if (salir == 0) {
-            System.exit(0);
-        }
+        configurar.confirmarSalir();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnAcercaDeNosotrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcercaDeNosotrosMouseEntered
@@ -482,12 +493,7 @@ public final class Inicio extends javax.swing.JFrame {
         animarInicio.abrirVentana(pnlDescripcionPrograma, logoGrande);
     }//GEN-LAST:event_formWindowOpened
 
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-
-    }//GEN-LAST:event_txtUsuarioActionPerformed
-
     private void btnIniciarSesionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMousePressed
-
         animacionBtnInicioS.quitarPantallaInicio(pnlDescripcionPrograma, logoGrande, pnlLogin,
                 btnVolverAInicio, btnIniciarSesion);
         animacionBtnInicioS.quitarPantallaAcercaDeNosotros(pnlRedesDesarrollador, pnlAcercaDeNosotros, pnlLogin,
@@ -504,7 +510,6 @@ public final class Inicio extends javax.swing.JFrame {
 
     private void btnVolverAInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverAInicioMouseEntered
         btnVolverAInicio.setForeground(VERDE_CLARO);
-
     }//GEN-LAST:event_btnVolverAInicioMouseEntered
 
     private void btnVolverAInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverAInicioMouseExited
@@ -512,23 +517,26 @@ public final class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverAInicioMouseExited
 
     private void btnVolverAInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverAInicioMousePressed
-        animacionesVolverAInicio();
+        animarVolver.quitarLogin(pnlDescripcionPrograma, btnVolverAInicio, btnIniciarSesion,
+                pnlLogin, logoGrande);
+        animarVolver.quitarRedes(pnlDescripcionPrograma, btnVolverAInicio, btnIniciarSesion,
+                pnlRedesDesarrollador, pnlAcercaDeNosotros, logoGrande);
     }//GEN-LAST:event_btnVolverAInicioMousePressed
 
     private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
-        quitarPlaceHolderTxtUsuario();
+        configurar.crearPlaceHolder(txtUsuario, txtContra, "Introduzca su usuario", "JPasword");
     }//GEN-LAST:event_txtUsuarioMousePressed
 
     private void txtContraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContraMousePressed
-        quitarPlaceHolderTxtContra();
+        configurar.crearPlaceHolder(txtContra, txtUsuario, "JPasword", "Introduzca su usuario");
     }//GEN-LAST:event_txtContraMousePressed
 
     private void btnFacebookMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacebookMousePressed
-        redirigirLink(FACEBOOK);
+        configurar.redirigir(FACEBOOK);
     }//GEN-LAST:event_btnFacebookMousePressed
 
     private void btnTikTokMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTikTokMousePressed
-        redirigirLink(TIKTOK);
+        configurar.redirigir(TIKTOK);
     }//GEN-LAST:event_btnTikTokMousePressed
 
     private void btnAcercaDeNosotrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcercaDeNosotrosMousePressed
@@ -538,39 +546,18 @@ public final class Inicio extends javax.swing.JFrame {
                 btnVolverAInicio, btnIniciarSesion, pnlLogin);
     }//GEN-LAST:event_btnAcercaDeNosotrosMousePressed
 
-    private void pnlAcercaDeNosotrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlAcercaDeNosotrosMousePressed
-
-    }//GEN-LAST:event_pnlAcercaDeNosotrosMousePressed
-
     private void btnInstagramMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInstagramMousePressed
-        redirigirLink(INSTAGRAM);
+        configurar.redirigir(INSTAGRAM);
     }//GEN-LAST:event_btnInstagramMousePressed
 
-    private void pnlHeaderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlHeaderMouseClicked
-
-    }//GEN-LAST:event_pnlHeaderMouseClicked
-
-    private void alumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alumnoActionPerformed
-
-    }//GEN-LAST:event_alumnoActionPerformed
-
-    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
-
-    }//GEN-LAST:event_btnLoginMouseClicked
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String[] usuarios = null;
-        String linea = "";
-
-        File alumnosDatos = new File("Alumnos.txt");
-        File maestrosDatos = new File("Maestros.txt");
         if (alumno.isSelected()) {
-            validarContra(0, 0, usuarios, linea, "Alumnos", alumnosDatos);
-        }
-        if (maestro.isSelected()) {
-            validarContra(0, 0, usuarios, linea, "Maestros", maestrosDatos);
+            validar.autenticar("Alumnos", alumnosDatos, txtUsuario, txtContra);
         }
 
+        if (maestro.isSelected()) {
+            validar.autenticar("Maestros", maestrosDatos, txtUsuario, txtContra);
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     public static void main(String args[]) {
@@ -585,9 +572,6 @@ public final class Inicio extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
             new Inicio().setVisible(true);
         });
@@ -638,107 +622,4 @@ public final class Inicio extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtContra;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-
-    public void iniciarSesionVerdeBajo(Color verdeClaro) {
-        btnIniciarSesion.setBorder(new EtchedBorder(1, verdeClaro, verdeClaro));
-        btnIniciarSesion.setForeground(verdeClaro);
-    }
-
-    public void iniciarSesionVerdeOscuro(Color verdeOscuro) {
-        btnIniciarSesion.setBorder(new EtchedBorder(1, verdeOscuro, verdeOscuro));
-        btnIniciarSesion.setForeground(verdeOscuro);
-    }
-
-    public void animacionesVolverAInicio() {
-
-        if (pnlLogin.getY() == 150 && logoGrande.getX() == -270 && pnlDescripcionPrograma.getX() == 1100) {
-            animarPanel.JPanelYAbajo(150, 600, 10, 10, pnlLogin);
-            animarEtiqueta.JLabelXDerecha(-270, 110, 15, 10, logoGrande);
-            animarPanel.JPanelXIzquierda(1100, 400, 8, 10, pnlDescripcionPrograma);
-            animarEtiqueta.JLabelYArriba(10, -50, 10, 5, btnVolverAInicio);
-            animarEtiqueta.JLabelYAbajo(-50, 10, 10, 10, btnIniciarSesion);
-        }
-
-        if (pnlRedesDesarrollador.getY() == 150 && pnlAcercaDeNosotros.getY() == 600) {
-            animarPanel.JPanelYAbajo(150, 600, 10, 10, pnlRedesDesarrollador);
-            animarPanel.JPanelYArriba(600, 500, 10, 1, pnlAcercaDeNosotros);
-            animarEtiqueta.JLabelXDerecha(-270, 110, 15, 10, logoGrande);
-            animarPanel.JPanelXIzquierda(1100, 400, 8, 10, pnlDescripcionPrograma);
-            animarEtiqueta.JLabelYArriba(10, -50, 10, 5, btnVolverAInicio);
-            animarEtiqueta.JLabelYAbajo(-50, 10, 10, 10, btnIniciarSesion);
-        }
-    }
-
-    //  Cambio de icono por defecto de java
-    public void icono() {
-        URL url = getClass().getResource("/Imagenes/Logo.png");
-        ImageIcon I = new ImageIcon(url);
-        this.setIconImage(I.getImage());
-
-    }
-
-    //Validaciones de place holder en campos de inicio de sesion
-    public void quitarPlaceHolderTxtUsuario() {
-        if (txtUsuario.getText().equalsIgnoreCase("Introduzca su usuario")) {
-            txtUsuario.setText("");
-            txtUsuario.setForeground(NEGRO);
-        }
-        if (txtContra.getText().isEmpty()) {
-            txtContra.setText("JPasword");
-            txtContra.setForeground(GRIS);
-        }
-    }
-
-    public void quitarPlaceHolderTxtContra() {
-        if (txtContra.getText().equals("JPasword")) {
-            txtContra.setText("");
-            txtContra.setForeground(NEGRO);
-        }
-        if (txtUsuario.getText().isEmpty()) {
-            txtUsuario.setText("Introduzca su usuario");
-            txtUsuario.setForeground(GRIS);
-        }
-    }
-
-    //  metodo que redirige al navegador segun el link que se le ingrese al ser invocado
-    public void redirigirLink(String url) {
-        try {
-            try {
-                Desktop.getDesktop().browse(new URI(url));
-            } catch (IOException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-// codigo que se encarga de la autenticacion de usuario y contra
-
-    public void validarContra(int longitudArray, int indice, String[] usuarios, String linea, String identificador, File fichero) {
-        try {
-            Scanner escaner = new Scanner(fichero);
-            FileReader archivo = new FileReader(fichero);
-            BufferedReader leer = new BufferedReader(archivo);
-
-            while ((linea = leer.readLine()) != null) {
-                longitudArray++;
-            }
-            usuarios = new String[longitudArray];
-            while (escaner.hasNext()) {
-                usuarios[indice++] = escaner.nextLine();
-            }
-            intentos++;
-            usuario = txtUsuario.getText();
-            contra = txtContra.getText();
-
-            Seguridad verificacion = new Seguridad();
-            verificacion.validarUsuario(usuarios, usuario, contra, intentos, identificador);
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en la base de datos " + ex.getMessage());
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en la base de datos " + ex.getMessage());
-        }
-
-    }
-
 }

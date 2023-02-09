@@ -17,9 +17,18 @@ import javax.swing.JLabel;
 public class BtnIniciarSesionAnimacion {
 
     /**
-     * Objetos Utilizados:
+     * El objeto "animarEtiqueta" se usa para la implementacion del efecto slide
+     * en las etiquetas de texto.
+     *
+     * nota: Contiene el patron Singleton para ahorrar recursos.
      */
     JLabelAnimaciones animarEtiqueta = JLabelAnimaciones.getInstance();
+    /**
+     * El objeto "animarPanel" se usa para la implementacion del efecto slide en
+     * los paneles.
+     *
+     * nota: Contiene el patron Singleton para ahorrar recursos.
+     */
     JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
 
     /**
