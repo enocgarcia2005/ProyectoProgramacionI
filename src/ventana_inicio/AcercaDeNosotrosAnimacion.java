@@ -20,14 +20,14 @@ public class AcercaDeNosotrosAnimacion {
      *
      * nota: Contiene el patron Singleton para ahorrar recursos.
      */
-    JLabelAnimaciones animarEtiqueta = JLabelAnimaciones.getInstance();
+    private final JLabelAnimaciones animarEtiqueta = JLabelAnimaciones.getInstance();
     /**
      * El objeto "animarPanel" se usa para la implementacion del efecto slide en
      * los paneles.
      *
      * nota: Contiene el patron Singleton para ahorrar recursos.
      */
-    JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
+    private final JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
 
     /**
      * La funcion principal de esta clase es quitar la pantalla principal al

@@ -1,5 +1,6 @@
 package ventana_inicio;
 
+import clases_globales.ConfiguracionesGenerales;
 import java.awt.Color;
 import java.io.File;
 
@@ -574,7 +575,7 @@ public final class Inicio extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> {
             new Inicio().setVisible(true);
-        });
+        });  
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,7 +1,6 @@
 package ventana_maestros;
 
 public class Datos {
-    //Atributos
 
     private String nombres;
     private String carnet;
@@ -11,7 +10,6 @@ public class Datos {
     private double acumulado;
     private double notaFinal;
 
-    //Constructor parametrizado
     public Datos(String nombres, String carnet, String asignatura, double primerPacial, double segundoParcial, double acumulado, double notaFinal) {
         this.nombres = nombres;
         this.carnet = carnet;
@@ -22,11 +20,9 @@ public class Datos {
         this.notaFinal = notaFinal;
     }
 
-    //Constructor vacio
     public Datos() {
     }
 
-    //Getters y Setters
     public double getNotaFinal() {
         return notaFinal;
     }

@@ -21,7 +21,7 @@ public class UsuariosFactory {
      * El objeto "ventana" se crea para poder implementar de manera correcta el
      * patron ya mencionado
      */
-    JFrame ventana;
+    private JFrame ventana;
 
     /**
      * A como sabemos el patron factory usa el contructor parametrizado de la

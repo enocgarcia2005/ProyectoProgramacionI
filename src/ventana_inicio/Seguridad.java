@@ -21,7 +21,7 @@ public class Seguridad {
      * El objeto "inicio" se crea con el fin de poder implementar el reinico de
      * intentos fallidos en el login..
      */
-    LoginValidacion inicio = new LoginValidacion();
+   private final  LoginValidacion inicio = new LoginValidacion();
 
     /**
      * El metodo funciona con 5 parametros:

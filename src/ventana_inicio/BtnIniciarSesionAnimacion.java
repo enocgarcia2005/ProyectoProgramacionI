@@ -22,14 +22,14 @@ public class BtnIniciarSesionAnimacion {
      *
      * nota: Contiene el patron Singleton para ahorrar recursos.
      */
-    JLabelAnimaciones animarEtiqueta = JLabelAnimaciones.getInstance();
+    private final JLabelAnimaciones animarEtiqueta = JLabelAnimaciones.getInstance();
     /**
      * El objeto "animarPanel" se usa para la implementacion del efecto slide en
      * los paneles.
      *
      * nota: Contiene el patron Singleton para ahorrar recursos.
      */
-    JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
+    private final JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
 
     /**
      * Este metodo se encarga de quitar la pantalla de inicio para mostrar la de

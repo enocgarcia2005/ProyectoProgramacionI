@@ -22,14 +22,14 @@ public class VolverAInicioAnimacion {
      *
      * nota: Contiene el patron Singleton para ahorrar recursos.
      */
-    JLabelAnimaciones animarEtiqueta = JLabelAnimaciones.getInstance();
+    private final JLabelAnimaciones animarEtiqueta = JLabelAnimaciones.getInstance();
     /**
-     * El objeto "animarPanel" se usa para la implementacion del efecto slide
-     * en los paneles.
+     * El objeto "animarPanel" se usa para la implementacion del efecto slide en
+     * los paneles.
      *
      * nota: Contiene el patron Singleton para ahorrar recursos.
      */
-    JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
+    private final JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
 
     /**
      * Este metodo se encarga de quitar la pantalla de login al presionar el
@@ -60,7 +60,7 @@ public class VolverAInicioAnimacion {
      * @param pnlAcercaDe-Panel con btn acerca de nosotros
      * @param logo- logo del programa
      */
-    public void quitarRedes(JPanel pnlDescripcion, JLabel btnVolver, JLabel btnIniciarSesion, JPanel pnlRedes, JPanel pnlAcercaDe,JLabel logo) {
+    public void quitarRedes(JPanel pnlDescripcion, JLabel btnVolver, JLabel btnIniciarSesion, JPanel pnlRedes, JPanel pnlAcercaDe, JLabel logo) {
         if (pnlRedes.getY() == 150 && pnlAcercaDe.getY() == 600) {
             animarPanel.JPanelYAbajo(150, 600, 10, 10, pnlRedes);
             animarPanel.JPanelYArriba(600, 500, 10, 1, pnlAcercaDe);
@@ -76,11 +76,11 @@ public class VolverAInicioAnimacion {
      * @param btnVolver-btn volver a inicio.
      * @param btnIniciarSesion - btn iniciar sesion .
      */
-    private void animacionesRepetidas(JPanel pnlDescripcion, JLabel btnVolver, JLabel btnIniciarSesion,JLabel logo) {
+    private void animacionesRepetidas(JPanel pnlDescripcion, JLabel btnVolver, JLabel btnIniciarSesion, JLabel logo) {
         animarPanel.JPanelXIzquierda(1100, 400, 8, 10, pnlDescripcion);
         animarEtiqueta.JLabelYArriba(10, -50, 10, 5, btnVolver);
         animarEtiqueta.JLabelYAbajo(-50, 10, 10, 10, btnIniciarSesion);
-                    animarEtiqueta.JLabelXDerecha(-270, 110, 15, 10, logo);
+        animarEtiqueta.JLabelXDerecha(-270, 110, 15, 10, logo);
 
     }
 }

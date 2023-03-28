@@ -1,9 +1,12 @@
 package ventana_maestros;
 
-import animaciones.JLabelAnimaciones;
 import animaciones.JPanelAnimaciones;
+import clases_globales.CamposTexto;
+import clases_globales.ConfiguracionesGenerales;
+import clases_globales.ConfiguracionesTabla;
+import clases_globales.Estudiante;
+import clases_globales.Estudiantes;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public final class FrmMaestros extends javax.swing.JFrame {
@@ -29,38 +33,24 @@ public final class FrmMaestros extends javax.swing.JFrame {
     String[][] informacion = {};
     ArrayList<Datos> datosTabla = new ArrayList<>();
     /*Objetos*/
-    JLabelAnimaciones animarEtiqueta =  JLabelAnimaciones.getInstance();
-    JPanelAnimaciones animarPanel=JPanelAnimaciones.getInstance();
+    JPanelAnimaciones animarPanel = JPanelAnimaciones.getInstance();
     Datos datosAcademicos = new Datos();
     DefaultTableModel modeloTabla = new DefaultTableModel(informacion, ENCABEZADO_COLUMNAS);
-    File notas = new File("Notas.txt");
-    /*variables constantes*/
-    //colores
-    private final Color BLANCO = new Color(255, 255, 255);
     private final Color VERDE_OSCURO = new Color(51, 153, 0);
     private final Color VERDE_CLARO = new Color(51, 180, 0);
-    //enteros
-    private final int ALTURA_FILAS = 25;
-    private final int ANCHO_COLUMNAS = 200;
-    //fuentes
-    private final Font TIMES_NEW_ROMAN = new Font("Times New Roman", Font.PLAIN, 18);
 
-    /*variables estaticas*/
-    //variables comunes
-    private String nombresAlumno;
-    private String numeroCarnet;
-    private String asignatura;
-    private double notaPrimerParcial;
-    private double notaSegundoParcial;
-    private double notaAcumulado;
-    private double notaFinal;
-    private String registroModificado;
-    private String registroNormal;
-    private String registro;
+    BotonesAnimacion animaciones = new BotonesAnimacion();
+    ConfiguracionesGenerales configuracion = new ConfiguracionesGenerales();
+    ConfiguracionesTabla configuracionTabla = new ConfiguracionesTabla();
+    Estudiante estudiante;
+    Estudiante estudianteTemp;
+    Estudiantes estudiantes = new Estudiantes();
+    CamposTexto configuarTxt = new CamposTexto();
+    File notas = new File("Notas.txt");
 
     public FrmMaestros() {
         initComponents();
-        configTable(modeloTabla);
+        configuracion.configTable(modeloTabla, tbRegistroNotas);
         btnEliminar.setEnabled(false);
         btnModificar.setEnabled(false);
         mostrarInfoEnCampos();
@@ -334,6 +324,11 @@ public final class FrmMaestros extends javax.swing.JFrame {
         txtPrimerParcial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txtPrimerParcial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtPrimerParcial.setBorder(null);
+        txtPrimerParcial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrimerParcialActionPerformed(evt);
+            }
+        });
         txtPrimerParcial.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPrimerParcialKeyTyped(evt);
@@ -476,23 +471,23 @@ public final class FrmMaestros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        int salir = JOptionPane.showConfirmDialog(null, "Profe \n¿Estas seguro que quieres cerrar sesion?");
-        if (salir == 0) {
-            this.dispose();
-        }
+        configuracion.confirmarSalir();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnControldeNotasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControldeNotasMousePressed
-        animacionesBtnControlDeNotas();
+        animaciones.animarBotonNotas(pnlControlNotas, btnControldeNotas, pnlBienvenida);
     }//GEN-LAST:event_btnControldeNotasMousePressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         animarPanel.JPanelYAbajo(-380, 10, 10, 10, pnlBienvenida);
-        llenarTabla();
+        configuracionTabla.llenarTabla(notas, modeloTabla);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        animacionesBtnRegresar();
+        animaciones.animarBotonRegresar(pnlControlNotas, btnControldeNotas, pnlBienvenida);
+        for (JTextField campo : camposTexto()) {
+            configuarTxt.limpiarCampos(campo);
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnControldeNotasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControldeNotasMouseEntered
@@ -508,8 +503,10 @@ public final class FrmMaestros extends javax.swing.JFrame {
     }//GEN-LAST:event_btnControldeNotasMouseExited
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        limpiarCampos();
-        activarCampos();
+        for (JTextField campo : camposTexto()) {
+            configuarTxt.limpiarCampos(campo);
+            configuarTxt.desactivarCampos(campo);
+        }
         txtNombres.requestFocus();
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
@@ -517,14 +514,23 @@ public final class FrmMaestros extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        guardarEnFichero();
+        if (camposVacios()) {
+            JOptionPane.showMessageDialog(null, "Rellene todos los Campos");
+        } else {
+            estudiante = crearObjetoEstudiante();
+            estudiantes.guardar(estudiante);
+            configuracionTabla.limpiarTabla(tbRegistroNotas);
+            configuracionTabla.llenarTabla(notas, modeloTabla);
+            for (JTextField campo : camposTexto()) {
+                configuarTxt.limpiarCampos(campo);
+            }
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         if (cbxOpcionesModificar.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Selecciona una opcion");
         } else if (camposVacios()) {
-            //este condicion es una medida de seguridad si el boton modificar se puede seleccionar sin haber hecho click en la tabla
             JOptionPane.showMessageDialog(null, "Seleccione un registro");
         } else {
             SeleccionCbxModificar();
@@ -533,8 +539,10 @@ public final class FrmMaestros extends javax.swing.JFrame {
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         animarPanel.JPanelXIzquierda(20, -300, 15, 10, PnlModificar);
-        desactivarCampos();
-        limpiarCampos();
+        for (JTextField campo : camposTexto()) {
+            configuarTxt.desactivarCampos(campo);
+            configuarTxt.limpiarCampos(campo);
+        }
         cbxOpcionesModificar.setSelectedIndex(-1);
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
@@ -547,7 +555,21 @@ public final class FrmMaestros extends javax.swing.JFrame {
         if (cbxOpcionesModificar.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Primero selleccione un campo y realize los cambios correspondientes");
         } else {
-            modificarFichero("", "");
+            estudiante = crearObjetoEstudiante();
+            estudiantes.modificar(estudianteTemp, estudiante);
+            configuracionTabla.limpiarTabla(tbRegistroNotas);
+            configuracionTabla.llenarTabla(notas, modeloTabla);
+                  animarPanel.JPanelXIzquierda(20, -300, 15, 10, PnlModificar);
+        for (JTextField campo : camposTexto()) {
+            configuarTxt.desactivarCampos(campo);
+            configuarTxt.limpiarCampos(campo);
+        }
+        cbxOpcionesModificar.setSelectedIndex(-1);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnNuevo.setEnabled(true);
+        btnRegresar.setEnabled(true);
         }
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
@@ -558,6 +580,7 @@ public final class FrmMaestros extends javax.swing.JFrame {
         btnGuardar.setEnabled(false);
         btnNuevo.setEnabled(false);
         btnRegresar.setEnabled(false);
+        estudianteTemp = crearObjetoEstudiante();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -596,6 +619,22 @@ public final class FrmMaestros extends javax.swing.JFrame {
     private void txtAsignaturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAsignaturaKeyTyped
 
     }//GEN-LAST:event_txtAsignaturaKeyTyped
+
+    private void txtPrimerParcialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrimerParcialActionPerformed
+
+    }//GEN-LAST:event_txtPrimerParcialActionPerformed
+    /**
+     * El metodo campos vacios tiene como fin determinar si todos los campos
+     * estan llenos o aun hay algunos sin ser llenados.
+     *
+     * @return regresa una respuesta en boleano, verdadero si hay campos vacios,
+     * falso si todos los campos de texto contienen informacion.
+     */
+    public boolean camposVacios() {
+        return txtNombres.getText().isEmpty() || txtCarnet.getText().isEmpty()
+                || txtAcumulado.getText().isEmpty() || txtPrimerParcial.getText().isEmpty()
+                || txtSegundoParcial.getText().isEmpty() || txtAsignatura.getText().isEmpty();
+    }
 
     public static void main(String args[]) {
 
@@ -660,44 +699,6 @@ public final class FrmMaestros extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrimerParcial;
     private javax.swing.JTextField txtSegundoParcial;
     // End of variables declaration//GEN-END:variables
-    /*Codigo animaciones*/
-
-    public void animacionesBtnControlDeNotas() {
-        if (pnlControlNotas.getY() == 600 && btnControldeNotas.getY() == 380 && pnlBienvenida.getY() == 10) {
-            animarPanel.JPanelYArriba(10, -380, 10, 10, pnlBienvenida);
-            animarEtiqueta.JLabelYAbajo(380, 600, 10, 10, btnControldeNotas);
-            animarPanel.JPanelYArriba(600, 10, 10, 10, pnlControlNotas);
-        }
-    }
-
-    public void animacionesBtnRegresar() {
-        if (pnlControlNotas.getY() == 10 && btnControldeNotas.getY() == 600 && pnlBienvenida.getY() == -380) {
-            animarPanel.JPanelYArriba(-380, 10, 10, 10, pnlBienvenida);
-            animarEtiqueta.JLabelYAbajo(600, 380, 10, 10, btnControldeNotas);
-            animarPanel.JPanelYArriba(10, 600, 10, 10, pnlControlNotas);
-            limpiarCampos();
-        }
-    }
-
-    //codigo encargado de la personalizacion del JTable
-    public void configTable(DefaultTableModel modeloTabla) {
-        tbRegistroNotas.setModel(modeloTabla);
-        tbRegistroNotas.getTableHeader().setFont(TIMES_NEW_ROMAN);
-        tbRegistroNotas.getTableHeader().setOpaque(false);
-        tbRegistroNotas.getTableHeader().setBackground(VERDE_OSCURO);
-        tbRegistroNotas.getTableHeader().setForeground(BLANCO);
-        tbRegistroNotas.setRowHeight(ALTURA_FILAS);
-        tbRegistroNotas.getColumnModel().getColumn(0).setPreferredWidth(ANCHO_COLUMNAS);
-    }
-
-    //metodo campos vacios
-    public boolean camposVacios() {
-        return txtNombres.getText().isEmpty() || txtCarnet.getText().isEmpty()
-                || txtAcumulado.getText().isEmpty() || txtPrimerParcial.getText().isEmpty()
-                || txtSegundoParcial.getText().isEmpty() || txtAsignatura.getText().isEmpty();
-    }
-
-    //Este metodo muestra los datos en los Jtextfields y comboBoxs cuando se hace click en una fila de la tabla
     public void mostrarInfoEnCampos() {
         tbRegistroNotas.addMouseListener(new MouseAdapter() {
             @Override
@@ -705,6 +706,7 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 JTable tabla = (JTable) Mouse_Event.getSource();
                 Point coordenadas = Mouse_Event.getPoint();
                 int fila = tabla.rowAtPoint(coordenadas);
+
                 if (Mouse_Event.getClickCount() == 1) {
                     txtNombres.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 0).toString());
                     txtCarnet.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 1).toString());
@@ -712,172 +714,60 @@ public final class FrmMaestros extends javax.swing.JFrame {
                     txtPrimerParcial.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 3).toString());
                     txtSegundoParcial.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 4).toString());
                     txtAcumulado.setText(tbRegistroNotas.getValueAt(tbRegistroNotas.getSelectedRow(), 5).toString());
-
-                    desactivarCampos();
+                    configuarTxt.desactivarCampos(txtNombres, txtCarnet, txtPrimerParcial, txtSegundoParcial,
+                            txtAcumulado, txtAsignatura);
                 }
+
             }
         });
     }
 
-    // Metodos que configuran la tabla par que muestre los datos correctamente
-    public void llenarTabla() {
-        try {
-            BufferedReader leer = new BufferedReader(new FileReader(notas));
-            Object[] filasTabla = leer.lines().toArray();
-            for (int i = 0; i < filasTabla.length; i++) {
-                String filaCompleta = filasTabla[i].toString();
-                String[] filaElementosSeparados = filaCompleta.split(",");
-                modeloTabla.addRow(filaElementosSeparados);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al llenar la tabla: " + e);
-        }
-    }
-
-    public void limpiarTabla() {
-        DefaultTableModel tabla = (DefaultTableModel) tbRegistroNotas.getModel();
-        int numeroFilas = tbRegistroNotas.getRowCount() - 1;
-        for (int i = numeroFilas; i >= 0; i--) {
-            tabla.removeRow(tabla.getRowCount() - 1);
-        }
-    }
-
-    //Este metodo se encarga de guardar los datos en el txt
-    public void guardarEnFichero() {
-        if (camposVacios()) {
-            JOptionPane.showMessageDialog(null, "Rellene todos los Campos");
-        } else {
-            dividirRegistroEnVariables(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado);
-            calculoNotaFinal(notaPrimerParcial, notaSegundoParcial, notaAcumulado);
-            registro = registroString(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado, notaFinal);
-
-            try (FileWriter escribir = new FileWriter(notas, true)) {
-                escribir.write(registro);
-                escribir.write(System.getProperty("line.separator"));
-                JOptionPane.showMessageDialog(this, "Guardado Correctamente");
-
-                limpiarTabla();
-                llenarTabla();
-                limpiarCampos();
-                desactivarCampos();
-            } catch (IOException e) {
-            }
-        }
-    }
-
-    //Este metodo se encarga de limpiar campos
-    public void limpiarCampos() {
-        txtNombres.setText("");
-        txtCarnet.setText("");
-        txtPrimerParcial.setText("");
-        txtSegundoParcial.setText("");
-        txtAcumulado.setText("");
-        txtAsignatura.setText("");
-    }
-
-    //Este metodo inhabilita los txt
-    public void desactivarCampos() {
-        txtNombres.setEditable(false);
-        txtCarnet.setEditable(false);
-        txtPrimerParcial.setEditable(false);
-        txtSegundoParcial.setEditable(false);
-        txtAcumulado.setEditable(false);
-        txtAsignatura.setEditable(false);
-    }
-
-    //Este metodo habilita los txt
-    public void activarCampos() {
-        txtNombres.setEditable(true);
-        txtCarnet.setEditable(true);
-        txtPrimerParcial.setEditable(true);
-        txtSegundoParcial.setEditable(true);
-        txtAcumulado.setEditable(true);
-        txtAsignatura.setEditable(true);
-    }
-    //Este metodo vincula el CbxModificar con los campos ingresados
-
     public void SeleccionCbxModificar() {
         switch (cbxOpcionesModificar.getSelectedIndex()) {
-
             case 0 -> {
-                desactivarCampos();
+                for (JTextField campo : camposTexto()) {
+                    configuarTxt.desactivarCampos(campo);
+                }
                 txtNombres.setEditable(true);
                 txtNombres.requestFocus();
             }
             case 1 -> {
-                desactivarCampos();
+                for (JTextField campo : camposTexto()) {
+                    configuarTxt.desactivarCampos(campo);
+                }
                 txtCarnet.setEditable(true);
                 txtCarnet.requestFocus();
             }
             case 2 -> {
-                desactivarCampos();
+                for (JTextField campo : camposTexto()) {
+                    configuarTxt.desactivarCampos(campo);
+                }
                 txtAsignatura.setEditable(true);
                 txtAsignatura.requestFocus();
             }
             case 3 -> {
-                desactivarCampos();
+                for (JTextField campo : camposTexto()) {
+                    configuarTxt.desactivarCampos(campo);
+                }
                 txtPrimerParcial.setEditable(true);
                 txtPrimerParcial.requestFocus();
             }
             case 4 -> {
-                desactivarCampos();
+                for (JTextField campo : camposTexto()) {
+                    configuarTxt.desactivarCampos(campo);
+                }
                 txtSegundoParcial.setEditable(true);
                 txtSegundoParcial.requestFocus();
             }
             case 5 -> {
-                desactivarCampos();
+                for (JTextField campo : camposTexto()) {
+                    configuarTxt.desactivarCampos(campo);
+                }
                 txtAcumulado.setEditable(true);
                 txtAcumulado.requestFocus();
             }
         }
-        dividirRegistroEnVariables(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado);
-        calculoNotaFinal(notaPrimerParcial, notaSegundoParcial, notaAcumulado);
-        registroString(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado, notaFinal);
-        registroNormal = registro;
-    }
 
-    //Este metodo se encarga de Modificar valores dentro del archivo txt
-    public void modificarFichero(String linea, String nombreFichero) {
-        dividirRegistroEnVariables(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado);
-        calculoNotaFinal(notaPrimerParcial, notaSegundoParcial, notaAcumulado);
-        registroString(nombresAlumno, numeroCarnet, asignatura, notaPrimerParcial, notaSegundoParcial, notaAcumulado, notaFinal);
-        registroModificado = registro;
-
-        String nombreTemporalFichero = "Modificar2.txt";
-        File ficheroNuevo = new File(nombreTemporalFichero);
-
-        try {
-
-            BufferedReader leer;
-            FileWriter sobreEscribirDatos;
-            try (FileReader archivo = new FileReader(notas)) {
-                leer = new BufferedReader(archivo);
-                sobreEscribirDatos = new FileWriter(ficheroNuevo);
-                while ((linea = leer.readLine()) != null) {
-                    String escribir = linea;
-                    if (linea.equals(registroNormal)) {
-
-                        sobreEscribirDatos.write(registroModificado);
-                        sobreEscribirDatos.write(System.getProperty("line.separator"));
-                    } else if (linea.equalsIgnoreCase(escribir)) {
-                        System.out.println(escribir);
-                        sobreEscribirDatos.write(escribir);
-                        sobreEscribirDatos.write(System.getProperty("line.separator"));
-                    }
-
-                }
-            }
-            leer.close();
-            sobreEscribirDatos.close();
-            nombreFichero = notas.getName();
-            notas.delete();
-            ficheroNuevo.renameTo(notas);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-            System.out.println(ex);
-        }
-        limpiarTabla();
-        llenarTabla();
     }
 
     //Este metodo pasa los datos del archivo de texto a objetos para poder manipular con ellos
@@ -940,9 +830,10 @@ public final class FrmMaestros extends javax.swing.JFrame {
                 }
             }
             datosTabla.clear();
-            limpiarTabla();
-            llenarTabla();
-            limpiarCampos();
+            configuracionTabla.limpiarTabla(tbRegistroNotas);
+            configuracionTabla.llenarTabla(notas, modeloTabla);
+            configuarTxt.limpiarCampos(txtNombres, txtCarnet, txtPrimerParcial, txtSegundoParcial,
+                    txtAcumulado, txtAsignatura);
         } catch (HeadlessException | IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -967,20 +858,32 @@ public final class FrmMaestros extends javax.swing.JFrame {
         }
     }
 
-    public void calculoNotaFinal(double notaPrimerParcial, double notaSegundoParcial, double acumulado) {
-        notaFinal = notaPrimerParcial + notaSegundoParcial + acumulado;
+    public double calculoNotaFinal() {
+        return Double.parseDouble(txtPrimerParcial.getText())
+                + Double.parseDouble(txtSegundoParcial.getText())
+                + Double.parseDouble(txtAcumulado.getText());
+
     }
 
-    public void dividirRegistroEnVariables(String nombre, String carnet, String asignatura, double notaPrimerParcial, double notaSegundoParcial, double acumulado) {
-        nombre = String.valueOf(txtNombres.getText());
-        carnet = String.valueOf(txtCarnet.getText());
-        asignatura = String.valueOf(txtAsignatura.getText());
-        notaPrimerParcial = Double.parseDouble(txtPrimerParcial.getText());
-        notaSegundoParcial = Double.parseDouble(txtSegundoParcial.getText());
-        acumulado = Double.parseDouble(txtAcumulado.getText());
+    public Estudiante crearObjetoEstudiante() {
+        Estudiante temp = new Estudiante(txtNombres.getText())
+                .setAsignatura(txtAsignatura.getText())
+                .setCarnet(txtCarnet.getText())
+                .setPrimerPacial(Double.parseDouble(txtPrimerParcial.getText()))
+                .setSegundoParcial(Double.parseDouble(txtSegundoParcial.getText()))
+                .setAcumulado(Double.parseDouble(txtAcumulado.getText()))
+                .setNotaFinal(calculoNotaFinal());
+        return temp;
     }
 
-    public String registroString(String nombre, String carnet, String asignatura, double notaPrimerParcial, double notaSegundoParcial, double acumulado, double notaFinal) {
-        return nombre + "," + carnet + "," + asignatura + "," + notaPrimerParcial + "," + notaSegundoParcial + "," + acumulado + "," + notaFinal + ",";
+    public JTextField[] camposTexto() {
+        JTextField[] camposTexto = new JTextField[6];
+        camposTexto[0] = txtNombres;
+        camposTexto[1] = txtCarnet;
+        camposTexto[2] = txtPrimerParcial;
+        camposTexto[3] = txtSegundoParcial;
+        camposTexto[4] = txtAcumulado;
+        camposTexto[5] = txtAsignatura;
+        return camposTexto;
     }
 }

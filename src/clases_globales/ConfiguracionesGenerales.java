@@ -1,16 +1,17 @@
-package ventana_inicio;
+package clases_globales;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Font;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Esta clase contiene todas las configuraciones generales de la ventana de
@@ -31,6 +32,33 @@ public class ConfiguracionesGenerales {
      * por ello esta creado de tipo estatica.
      */
     private final Color NEGRO = new Color(0, 0, 0);
+    /**
+     * El objeto "BLANCO" almacena el codigo RGB del color que indica su nombre,
+     * por ello esta creado de tipo estatica.
+     */
+    private final Color BLANCO = new Color(255, 255, 255);
+    /**
+     * El objeto "VERDE_OSCURO" almacena el codigo RGB del color que indica su
+     * nombre, por ello esta creado de tipo estatica.
+     */
+    private final Color VERDE_OSCURO = new Color(51, 153, 0);
+    /**
+     * La variable "ALTURA_FILAS" de tipo entero contiene la altura en numero
+     * entero de las filas de las tablas, es por ello que se crea de tipo final.
+     */
+    private final int ALTURA_FILAS = 25;
+    /**
+     * La variable "ANCHO_COLUMNAS" de tipo entero contiene el ancho en numero
+     * entero de las columnas de las tablas, es por ello que se crea de tipo
+     * final.
+     */
+    private final int ANCHO_COLUMNAS = 200;
+    /**
+     * El objeto " TIMES_NEW_ROMAN" de tipo font contiene el tipo de fuente del
+     * que se nombre indica, se crea aqui con el fin de que si se desea cambiar
+     * el tamaño o estilo se mas facil.
+     */
+    private final Font TIMES_NEW_ROMAN = new Font("Times New Roman", Font.PLAIN, 18);
 
     /**
      * El metodo colorearEtiqueta, como su nombre inidica se encarga de darle
@@ -79,10 +107,10 @@ public class ConfiguracionesGenerales {
             try {
                 Desktop.getDesktop().browse(new URI(url));
             } catch (IOException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+
             }
         } catch (URISyntaxException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 
@@ -96,5 +124,22 @@ public class ConfiguracionesGenerales {
         if (salir == 0) {
             System.exit(0);
         }
+    }
+
+    /**
+     * Este metodo se encarga de los ajustes visual de las tablas que muestran
+     * dentro del proyecto, tales como tipo de letra, colores, tamaño, etc.
+     *
+     * @param modeloTabla-El modelo de la tabla.
+     * @param tabla- la tabla que se muestra en la ventana.
+     */
+    public void configTable(DefaultTableModel modeloTabla, JTable tabla) {
+        tabla.setModel(modeloTabla);
+        tabla.getTableHeader().setFont(TIMES_NEW_ROMAN);
+        tabla.getTableHeader().setOpaque(false);
+        tabla.getTableHeader().setBackground(VERDE_OSCURO);
+        tabla.getTableHeader().setForeground(BLANCO);
+        tabla.setRowHeight(ALTURA_FILAS);
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(ANCHO_COLUMNAS);
     }
 }
